@@ -1,0 +1,375 @@
+package com.internet.myui;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.internet.http.interfaces.data.InspectItem;
+import com.internet.ims.R;
+import com.internet.ui.CameraActivity;
+import com.internet.ui.InspectTaskDetail;
+import com.internet.util.GetSDImage;
+import com.internet.util.NormalUtil;
+
+public class InflateOperateScrollView {
+	private final int SLIPBTN = 1;// 开关
+	private final int INPUT = 2;// 输入
+	private Context mContext;
+	private List<InspectItem> mitems = null;
+	private int mPage = 0;
+	private String mTaskId;
+	private ViewGroup mViewGroup;
+
+	public InflateOperateScrollView(Context context, List<InspectItem> items,
+			int page, ViewGroup viewGroup, final String taskId) {
+		// TODO Auto-generated constructor stub
+		this.mContext = context;
+		this.mitems = items;
+		this.mPage = page;
+		this.mTaskId = taskId;
+		this.mViewGroup = viewGroup;
+	}
+
+	public void initScrollView() {
+
+		mViewGroup.removeAllViews();
+		LayoutInflater inflater = LayoutInflater.from(mContext);
+		for (int i = 0; i < mitems.size(); i++) {
+			InspectItem inspectItem = mitems.get(i);
+			switch (Integer.parseInt(inspectItem.getInputType())) {
+			case 1:
+				if (inspectItem.getItemVal() == null
+						|| inspectItem.getItemVal().equals(""))
+					inspectItem.setItemVal("1");
+				break;
+			case 2:
+				if (inspectItem.getItemVal() == null)
+					inspectItem.setItemVal("");
+				break;
+			}
+		}
+		View convertView = null;
+		for (int position = 0; position < mitems.size(); position++) {
+			InspectItem inspectItem = mitems.get(position);
+			int inputType = Integer.parseInt(inspectItem.getInputType());
+			short photoType = Short.parseShort(inspectItem.getPhotoType());
+			String itemName = inspectItem.getItemName();
+			String parentName = inspectItem.getParentName();
+
+			// 判断要不要加Title
+			if (position == 0) {
+				convertView = inflater.inflate(
+						R.layout.baseoperate_parent_item, null);
+				TextView itemNameTextView = (TextView) convertView
+						.findViewById(R.id.baseoperate_parent_itemName);
+				itemNameTextView.setText(parentName);
+				mViewGroup.addView(convertView);
+			} else {
+				String lastParentName = mitems.get(position - 1)
+						.getParentName();
+				if (!inspectItem.getParentName().equals(lastParentName)) {
+					convertView = inflater.inflate(
+							R.layout.baseoperate_parent_item, null);
+					TextView itemNameTextView = (TextView) convertView
+							.findViewById(R.id.baseoperate_parent_itemName);
+					itemNameTextView.setText(parentName);
+					mViewGroup.addView(convertView);
+				}
+			}
+
+			if (inputType == SLIPBTN) {
+				convertView = inflater.inflate(
+						R.layout.baseoperate_slipbtn_item, null);
+				// 巡检或抽各项描述
+				TextView itemNameTextView = (TextView) convertView
+						.findViewById(R.id.baseoperate_slip_itemName);
+				itemNameTextView.setText(itemName);
+
+				final ImageButton slipButton = (ImageButton) convertView
+						.findViewById(R.id.baseoperate_slipbtn);
+				final ImageButton cameraButton = (ImageButton) convertView
+						.findViewById(R.id.baseoperate_slip_camera);
+
+				String itemVal = inspectItem.getItemVal();
+				if (itemVal == null || itemVal.equals("1")) {
+					inspectItem.setItemVal("1");
+					slipButton.setImageResource(R.drawable.btn_toggle_on);
+					slipButton.setTag("1");
+				} else if (itemVal.equals("0")) {
+					slipButton.setImageResource(R.drawable.btn_toggle_off);
+					slipButton.setTag("0");
+				}
+
+				// 获取照片文件是否存在
+				ArrayList<String> photoList = GetSDImage
+						.getImgPathList(NormalUtil.getXunjianPhotoDir(mContext)
+								+ mTaskId + "/" + inspectItem.getItemId() + "/");
+				// 拍照类型phototype(1.正常时必须拍照，2.异常时必须拍照 3.正常异常都必须拍 0.无特定要求)
+				if (photoList.size() > 0) {// 有照片的全显示为绿色
+					cameraButton.setImageResource(R.drawable.icon_camera2);
+				} else {// 无照片，根据phototype判断
+					if (itemVal.equals("1") && photoType == 1) {
+						cameraButton.setImageResource(R.drawable.icon_camera4);
+					} else if (itemVal.equals("2") && photoType == 2) {
+						cameraButton.setImageResource(R.drawable.icon_camera4);
+					} else if (photoType == 3) {
+						cameraButton.setImageResource(R.drawable.icon_camera4);
+					} else {
+						cameraButton.setImageResource(R.drawable.icon_camera);
+					}
+				}
+				slipButton.setOnClickListener(new MyClickLisener(position,
+						mitems, cameraButton));
+
+				cameraButton.setTag(Integer.valueOf(position));
+				cameraButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Integer tag = (Integer) v.getTag();
+						Intent intent = new Intent(mContext,
+								CameraActivity.class);
+						intent.putExtra("taskid", mTaskId);
+						intent.putExtra("itemid", mitems.get(tag.intValue())
+								.getItemId());
+
+						intent.putExtra("from", 0);
+						mContext.startActivity(intent);
+					}
+				});
+
+			} else if (inputType == INPUT) {
+				convertView = inflater.inflate(R.layout.baseoperate_input_item,
+						null);
+				TextView itemNameTextView = (TextView) convertView
+						.findViewById(R.id.baseoperate_input_itemName);
+				itemNameTextView.setText(itemName);
+				final ImageButton cameraButton = (ImageButton) convertView
+						.findViewById(R.id.baseoperate_input_camera);
+				ArrayList<String> photoList = GetSDImage
+						.getImgPathList(NormalUtil.getXunjianPhotoDir(mContext)
+								+ mTaskId + "/" + inspectItem.getItemId() + "/");
+
+				if (photoList.size() > 0) {
+					cameraButton.setImageResource(R.drawable.icon_camera2);
+				} else {
+					if (photoType == 3) {
+						cameraButton.setImageResource(R.drawable.icon_camera4);
+					} else {
+						cameraButton.setImageResource(R.drawable.icon_camera);
+					}
+				}
+
+				final EditText editText = (EditText) convertView
+						.findViewById(R.id.baseoperate_input);
+				String itemval = inspectItem.getItemVal();
+				final String itemUnit = inspectItem.getItemUnit();
+				if (!itemval.equals("")) {
+					if (itemUnit != null && !itemUnit.equals("")) {
+						editText.setText(itemval.replaceAll(itemUnit, ""));
+					} else {
+						editText.setText(itemval);
+					}
+				} else {
+					if (itemUnit != null && !itemUnit.equals(""))
+						editText.setHint("单位:" + itemUnit);
+				}
+				editText.addTextChangedListener(new MyTextWatcher(position,
+						mitems, editText, itemUnit));
+				Message msg = new Message();
+				msg.what = InspectTaskDetail.DISMISS_INPUT;
+				msg.obj = editText;
+				((InspectTaskDetail) mContext).mHandler.sendMessageDelayed(msg,
+						500);
+				cameraButton.setTag(Integer.valueOf(position));
+				cameraButton.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Integer tag = (Integer) v.getTag();
+						Intent intent = new Intent(mContext,
+								CameraActivity.class);
+						intent.putExtra("taskid", mTaskId);
+						intent.putExtra("itemid", mitems.get(tag.intValue())
+								.getItemId());
+
+						intent.putExtra("from", 0);
+						mContext.startActivity(intent);
+					}
+				});
+			}
+			// 对列表项内容进行设定
+			convertView.setTag(Integer.valueOf(position));
+			convertView.setOnTouchListener(new OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					// TODO Auto-generated method stub
+					// if (MotionEvent.ACTION_DOWN == event.getAction()) {
+					// NormalUtil.disappearInput((Activity)mContext);
+					// PopupWindow popupWindow = mContext.tiShiPopupWindows
+					// .get(mPage);
+					// if (popupWindow != null) {
+					// popupWindow.dismiss();
+					// popupWindow = null;
+					// }
+					//
+					// }
+					return false;
+				}
+			});
+
+			convertView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Integer tag = (Integer) v.getTag();
+					// View view = mActivity.clickedItem.get(mPage);
+					// if (view != null) {
+					// view.setSelected(false);
+					// }
+					// v.setSelected(true);
+					// mActivity.clickedItem.put(mPage, v);
+					//
+					// mActivity.positions.get(mPage).setPosition(tag.intValue());
+					System.out.println("operateaaa adapter item clicked " + v);
+				}
+			});
+
+			convertView.setOnLongClickListener(new OnLongClickListener() {
+
+				public boolean onLongClick(View v) {
+
+					Integer tag = (Integer) v.getTag();
+					String itemid = mitems.get(tag.intValue()).getItemId();
+
+					return false;
+				}
+			});
+
+			mViewGroup.addView(convertView);
+		}
+	}
+
+	public class MyClickLisener implements OnClickListener {
+		private List<InspectItem> mItems = null;
+		private int mPosition;
+		private ImageButton mCameraButton = null;
+
+		public MyClickLisener(int position, List<InspectItem> items,
+				ImageButton cameraButton) {
+			this.mPosition = position;
+			this.mItems = items;
+			this.mCameraButton = cameraButton;
+		}
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			if (v.getTag().equals("1")) {// 合格变为不合格
+				((ImageButton) v).setImageResource(R.drawable.btn_toggle_off);
+				v.setTag("0");
+				mItems.get(mPosition).setItemVal("0");
+			} else {// 不合格变为合格
+				((ImageButton) v).setImageResource(R.drawable.btn_toggle_on);
+				v.setTag("1");
+				mItems.get(mPosition).setItemVal("1");
+			}
+			// 加载照相按钮状态
+			InspectItem inspectItem = mItems.get(mPosition);
+			String itemValue = inspectItem.getItemVal();
+			short phototype = Short.parseShort(inspectItem.getPhotoType());
+			// 获取照片文件是否存在
+			ArrayList<String> photoList = GetSDImage.getImgPathList(NormalUtil
+					.getXunjianPhotoDir(mContext)
+					+ mTaskId
+					+ "/"
+					+ inspectItem.getItemId() + "/");
+			// 拍照类型(1.正常时必须拍照，2.异常时必须拍照 3.正常异常都必须拍 0.无特定要求)
+			if (phototype == 1) {
+				if (itemValue.equals("1")) {
+					if (photoList.size() > 0) {
+						mCameraButton.setImageResource(R.drawable.icon_camera2);
+					} else {
+						mCameraButton.setImageResource(R.drawable.icon_camera4);
+					}
+				} else {
+					mCameraButton.setImageResource(R.drawable.icon_camera);
+				}
+			} else if (phototype == 2) {
+				if (itemValue.equals("0")) {
+					if (photoList.size() > 0) {
+						mCameraButton.setImageResource(R.drawable.icon_camera2);
+					} else {
+						mCameraButton.setImageResource(R.drawable.icon_camera4);
+					}
+				} else {
+					mCameraButton.setImageResource(R.drawable.icon_camera);
+				}
+			} else if (phototype == 3) {
+				if (photoList.size() > 0) {
+					mCameraButton.setImageResource(R.drawable.icon_camera2);
+				} else {
+					mCameraButton.setImageResource(R.drawable.icon_camera4);
+				}
+			}
+		}
+
+	}
+
+	public class MyTextWatcher implements TextWatcher {
+		private List<InspectItem> mItems = null;
+		private int mPosition;
+		private EditText mEditText = null;
+		private String mItemUnit = null;
+
+		public MyTextWatcher(int position, List<InspectItem> items,
+				EditText editText, String itemUnit) {
+			this.mPosition = position;
+			this.mItems = items;
+			this.mEditText = editText;
+			this.mItemUnit = itemUnit;
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			// TODO Auto-generated method stub
+			String text = s.toString();
+
+			if (text == null || text.equals("")) {
+				mItems.get(mPosition).setItemVal("");
+				if (mItemUnit != null && !mItemUnit.equals("")) {
+					mEditText.setHint("单位:" + mItemUnit);
+				}
+			} else {
+				mItems.get(mPosition).setItemVal(text + mItemUnit);
+			}
+		}
+	}
+}

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f9f9f9"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="kdfadfk"
+        android:textColor="@color/black_color"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:id="@+id/photoview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1" >
+
+        <RelativeLayout
+            android:id="@+id/photoview_bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/photoview_bottom_marginbottom"
+            android:layout_marginTop="@dimen/photoview_bottom_margintop"
+            android:paddingLeft="@dimen/photoview_paddinghor"
+            android:paddingRight="@dimen/photoview_paddinghor" >
+
+            <Button
+                android:id="@+id/photoview_cancelbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@android:color/transparent"
+                android:text="0"
+                android:textColor="@color/green_color"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/photoview_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/photoview_deletebtn_marginright"
+                android:background="@drawable/icon_delete" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/photoview_bottom"
+            android:paddingLeft="@dimen/photoview_paddinghor"
+            android:paddingRight="@dimen/photoview_paddinghor" >
+
+            <ImageView
+                android:id="@+id/photoview_leftbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/icon_left_arr" />
+
+            <ImageView
+                android:id="@+id/photoview_rightbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/icon_right_arr" />
+
+            <com.internet.myui.MyGallery
+                android:id="@+id/photoview_gallery"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_toLeftOf="@id/photoview_rightbtn"
+                android:layout_toRightOf="@id/photoview_leftbtn"
+                android:spacing="2sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:layout_weight="0"
+        android:background="#14a2eb" />
+
+</LinearLayout>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f9f9f9"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/entrance_title_bg" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/yltx_title_text" />
+        </FrameLayout>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbarFadeDuration="20" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/text_1"
+                        style="@style/travel_text_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#fff3b712"
+                        android:drawableTop="@drawable/ticket"
+                        android:text="景区门票" />
+
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="fill_parent" />
+
+                    <TextView
+                        android:id="@+id/text_2"
+                        style="@style/travel_text_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#ff9557f3"
+                        android:drawableTop="@drawable/hotel"
+                        android:text="酒店住宿" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/text_3"
+                        style="@style/travel_text_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#ff0f4cd8"
+                        android:drawableTop="@drawable/traffic"
+                        android:text="交通票务" />
+
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="fill_parent" />
+
+                    <TextView
+                        android:id="@+id/text_4"
+                        style="@style/travel_text_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#ff83d118"
+                        android:drawableTop="@drawable/car"
+                        android:text="用车泊车" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/text_5"
+                        style="@style/travel_text_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#fffe874a"
+                        android:drawableTop="@drawable/holidays"
+                        android:text="反季节度假" />
+
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="fill_parent" />
+
+                    <TextView
+                        android:id="@+id/text_6"
+                        style="@style/travel_text_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#ff3590f4"
+                        android:drawableTop="@drawable/receive"
+                        android:text="目的地接送" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="52dp"
+                    android:background="#4fb631"
+                    android:gravity="center"
+                    android:text="高级搜索"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#e9e9e9" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#fcfcfc"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:src="@drawable/entrance_back" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="e券通余额"
+                android:textColor="#51b531"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="e券通购买"
+                android:textColor="#51b531"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:src="@drawable/entrance_close" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/cover"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:drawable/screen_background_dark_transparent"
+        android:visibility="gone" />
+
+</FrameLayout>

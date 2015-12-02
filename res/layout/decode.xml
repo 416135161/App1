@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f9f9f9"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <EditText
+        android:id="@+id/edit1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入要加密的内容"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/edit2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入加密数字"
+        android:maxLength="2"
+        android:inputType="number"
+         android:layout_marginTop="20dp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/red_color"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginTop="20dp"
+        android:text="加密"
+        android:textSize="16sp" >
+    </Button>
+
+</LinearLayout>

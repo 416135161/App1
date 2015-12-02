@@ -1,0 +1,38 @@
+package com.internet.myui;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.KeyEvent;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+
+public class MyEditText extends EditText {
+    private Context context;
+
+    public MyEditText(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        this.context = context;
+    }
+
+    public MyEditText(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
+    }
+
+    public MyEditText(Context context) {
+        super(context);
+        this.context = context;
+    }
+
+    @Override
+    public boolean dispatchKeyEventPreIme(KeyEvent event) {
+        if (context != null) {
+            InputMethodManager imm = (InputMethodManager) context
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm.isActive() && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+                clearFocus();
+            }
+        }
+        return super.dispatchKeyEventPreIme(event);
+    }
+}

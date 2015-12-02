@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="3dp" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/edit4"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="08:00"
+            android:textColor="@color/black_color"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/group4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:checkedButton="@+id/ataaw3"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/r41"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/btn_check"
+                android:text="周日"
+                android:textColor="@color/black_color"
+                android:textSize="14sp" >
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/r42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/btn_check"
+                android:text="周末"
+                android:textColor="@color/black_color"
+                android:textSize="14sp" >
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/r43"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/btn_check"
+                android:text="每天"
+                android:textColor="@color/black_color"
+                android:textSize="14sp" >
+            </RadioButton>
+        </RadioGroup>
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/login_check_bg"
+        android:text=" " />
+
+</LinearLayout>
