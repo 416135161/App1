@@ -79,10 +79,11 @@ public class MessageListAct extends Activity {
 				// TODO Auto-generated method stub
 				List<MessageItem> items = DBTool.getInstance().getSavedMessage(
 						getApplicationContext());
+				System.out.println("JJJJJJJJJJJJJJJJJJ");
 				if (items != null) {
 					adapter.setData(items);
-					mHandler.sendEmptyMessage(0);
 				}
+				mHandler.sendEmptyMessage(0);
 			}
 
 		}).start();
@@ -140,15 +141,6 @@ public class MessageListAct extends Activity {
 
 		}
 
-	}
-
-	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		super.onBackPressed();
-		Intent intent = new Intent();
-		intent.setClass(this, Search.class);
-		startActivity(intent);
 	}
 
 	class ViewHolder {

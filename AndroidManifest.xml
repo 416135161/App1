@@ -16,7 +16,7 @@
     android:icon="@drawable/app1_logo"
     -->
     <application
-         android:icon="@drawable/app1_logo"
+        android:icon="@drawable/app1_logo"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
         <activity
@@ -24,22 +24,21 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
-              
         </activity>
         <activity
             android:name="com.internet.ui.LogoAct"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
-             
         </activity>
         <activity
             android:name="com.internet.ui.Search"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -48,7 +47,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
-        
         </activity>
         <activity
             android:name="com.internet.ui.PhotoPreview"
@@ -70,6 +68,12 @@
         </activity>
         <activity
             android:name="com.internet.ui.TravelAct"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.internet.ui.MessageListAct"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
