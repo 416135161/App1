@@ -40,6 +40,9 @@ public class DBTool {
 					list = new ArrayList<MessageItem>();
 				}
 				MessageItem message = new MessageItem();
+				message.setId(Long.valueOf(
+						cursor.getString(cursor.getColumnIndex("id")))
+						.longValue());
 				message.setBody(cursor.getString(cursor.getColumnIndex("body")));
 				message.setDate(cursor.getString(cursor.getColumnIndex("date")));
 				message.setPhoneNo(cursor.getString(cursor
@@ -110,7 +113,7 @@ public class DBTool {
 						.getColumnIndex("phoneNo")));
 				message.setPhotoPath(cursor.getString(cursor
 						.getColumnIndex("photoPath")));
-				
+
 				list.add(message);
 
 			}

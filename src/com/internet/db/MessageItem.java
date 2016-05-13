@@ -5,6 +5,7 @@ public class MessageItem implements java.io.Serializable
 {
 
 	private static final long serialVersionUID = 1L;
+	private long id;
 	private String body;
 	private String phoneNo;
 	private String date;
@@ -12,6 +13,16 @@ public class MessageItem implements java.io.Serializable
 
 	public MessageItem() {
 	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
 
 	public String getBody() {
 		return body;

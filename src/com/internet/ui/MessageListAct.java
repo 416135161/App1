@@ -135,8 +135,8 @@ public class MessageListAct extends Activity {
 				holder = (ViewHolder) convertView.getTag();
 			}
 		
-			holder.text2.setText(item.getBody());
-			holder.text3.setText(item.getDate().replace(" ", "\n "));
+			holder.text2.setText(item.getPhotoPath());
+//			holder.text3.setText(item.getDate().replace(" ", "\n "));
 			return convertView;
 
 		}
