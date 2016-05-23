@@ -17,12 +17,12 @@ import com.internet.netget.R;
 
 public class NormalUtil {
 	public static String getRootDir() {
-//		if (isHasSdcard()) {
-//			return Environment.getExternalStorageDirectory().getAbsolutePath()
-//					+ "/APP1/";
-//		} else {
-			return "/data/data/com.internet.netget/";
-//		}
+		if (isHasSdcard()) {
+			return Environment.getExternalStorageDirectory().getAbsolutePath()
+					+ "/APP1/";
+		} else {
+			return Environment.getDataDirectory().getAbsolutePath() + "/";
+		}
 	}
 	private static boolean isHasSdcard() {
 		String status = Environment.getExternalStorageState();

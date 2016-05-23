@@ -2,6 +2,8 @@ package com.internet.ui;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -731,12 +733,15 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 	}
 
 	private void saveBitmap(Bitmap bitmap) {
-		String imgName = NormalUtil.getSystemTime() + ".jpg";
+		Date date = new java.util.Date();
+		String dateTime = new SimpleDateFormat("MM-dd-HH-mm-ss").format(date);
+		String imgName = dateTime + ".jpg";
 		String imgPath = NormalUtil.getRootDir() + imgName;
 		bitmap = ImageUtil.setBitmapRotate(90, bitmap);
 		ImageUtil.saveBitmapToSDcard(imgPath, bitmap, 100);
 		MessageItem item = new MessageItem();
 		item.setPhotoPath(imgPath);
+		item.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 		DBTool.getInstance().saveMessage(getApplicationContext(), item);
 	}
 

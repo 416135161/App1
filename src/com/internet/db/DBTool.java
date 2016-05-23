@@ -75,7 +75,7 @@ public class DBTool {
 		contentValues.put("id", System.currentTimeMillis());
 		contentValues.put("phoneNo", item.getPhoneNo());
 		contentValues.put("body", item.getBody());
-		contentValues.put("date", getCurrentDate());
+		contentValues.put("date", item.getDate());
 		System.out.println(contentValues.get("date"));
 		contentValues.put("photoPath", item.getPhotoPath());
 		db.insert(DatabaseHelper.TABLE_SMS, null, contentValues);

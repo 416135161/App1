@@ -24,6 +24,7 @@ import com.internet.netget.R;
 
 public class MessageListAct extends Activity {
 	private ListView listView;
+	private View dataView;
 	private TextView noData;
 	private MyAdapter adapter;
 	private Handler mHandler = new Handler() {
@@ -32,10 +33,14 @@ public class MessageListAct extends Activity {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			adapter.notifyDataSetChanged();
-			if (adapter.getCount() == 0)
+			if (adapter.getCount() == 0) {
 				noData.setVisibility(View.VISIBLE);
-			else
+				dataView.setVisibility(View.GONE);
+			} else {
 				noData.setVisibility(View.INVISIBLE);
+				dataView.setVisibility(View.VISIBLE);
+			}
+
 		}
 	};
 
@@ -44,6 +49,7 @@ public class MessageListAct extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setTopBar();
+		dataView = findViewById(R.id.data_view);
 		listView = (ListView) findViewById(R.id.listview);
 		adapter = new MyAdapter();
 		listView.setAdapter(adapter);
@@ -134,9 +140,9 @@ public class MessageListAct extends Activity {
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-		
-			holder.text2.setText(item.getPhotoPath());
-//			holder.text3.setText(item.getDate().replace(" ", "\n "));
+
+			holder.text2.setText(item.getDate());
+			// holder.text3.setText(item.getDate().replace(" ", "\n "));
 			return convertView;
 
 		}
