@@ -742,6 +742,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		MessageItem item = new MessageItem();
 		item.setPhotoPath(imgPath);
 		item.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		item.setId(date.getTime());
 		DBTool.getInstance().saveMessage(getApplicationContext(), item);
 	}
 

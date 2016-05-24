@@ -1,6 +1,7 @@
 package com.internet.ui;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
@@ -10,10 +11,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,11 +24,15 @@ import com.internet.db.DBTool;
 import com.internet.db.MessageItem;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
+import com.internet.tools.MessageSender;
+import com.internet.tools.UserSession;
 
-public class MessageListAct extends Activity {
+public class MessageListAct extends Activity implements OnClickListener {
 	private ListView listView;
 	private View dataView;
 	private TextView noData;
+	private Button mBtn1, mBtn2, mBtn3, mBtnSend;
+	private List<MessageItem> mItems;
 	private MyAdapter adapter;
 	private Handler mHandler = new Handler() {
 		@Override
@@ -53,20 +60,15 @@ public class MessageListAct extends Activity {
 		listView = (ListView) findViewById(R.id.listview);
 		adapter = new MyAdapter();
 		listView.setAdapter(adapter);
-		listView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setClass(MessageListAct.this, MessageAct.class);
-				intent.putExtra("message", (MessageItem) adapter.getItem(arg2));
-				startActivity(intent);
-			};
-
-		});
 		noData = (TextView) findViewById(R.id.nodata);
+		mBtn1 = (Button) findViewById(R.id.btn_1);
+		mBtn2 = (Button) findViewById(R.id.btn_2);
+		mBtn3 = (Button) findViewById(R.id.btn_3);
+		mBtnSend = (Button) findViewById(R.id.btn_send);
+		mBtn1.setOnClickListener(this);
+		mBtn2.setOnClickListener(this);
+		mBtn3.setOnClickListener(this);
+		mBtnSend.setOnClickListener(this);
 
 	}
 
@@ -83,16 +85,56 @@ public class MessageListAct extends Activity {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				List<MessageItem> items = DBTool.getInstance().getSavedMessage(
+				mItems = DBTool.getInstance().getSavedMessage(
 						getApplicationContext());
 				System.out.println("JJJJJJJJJJJJJJJJJJ");
-				if (items != null) {
-					adapter.setData(items);
+				if (mItems != null) {
+					adapter.setData(mItems);
 				}
 				mHandler.sendEmptyMessage(0);
 			}
 
 		}).start();
+	}
+
+	@Override
+	public void onClick(View v) {
+
+		switch (v.getId()) {
+		case R.id.btn_1:
+			List<MessageItem> items = new ArrayList<MessageItem>();
+			items.add(mItems.get(0));
+			adapter.setData(items);
+			adapter.notifyDataSetChanged();
+			break;
+		case R.id.btn_2:
+			setDataByDay(7);
+			break;
+		case R.id.btn_3:
+			setDataByDay(30);
+			break;
+		case R.id.btn_send:
+			String sendInfo = adapter.getSendInfo();
+			System.out.println("LLL" + sendInfo);
+			MessageSender.getInstance().sendSms(
+					UserSession.getSendReportPhoneNo(getApplicationContext()),
+					sendInfo, getApplicationContext(), false);
+			break;
+		}
+	}
+
+	private void setDataByDay(long day) {
+		List<MessageItem> mSubItems = new ArrayList<MessageItem>();
+		long time = day * 24 * 60 * 60 * 1000;
+		for (int i = 0; i < mItems.size(); i++) {
+			MessageItem item = mItems.get(i);
+			if (item.getId() > (System.currentTimeMillis() - time)) {
+				mSubItems.add(item);
+			}
+
+		}
+		adapter.setData(mSubItems);
+		adapter.notifyDataSetChanged();
 	}
 
 	class MyAdapter extends BaseAdapter {
@@ -101,8 +143,15 @@ public class MessageListAct extends Activity {
 		public void setData(List<MessageItem> tasks) {
 			this.items.clear();
 			this.items.addAll(tasks);
-			tasks.clear();
-			tasks = null;
+
+		}
+
+		public String getSendInfo() {
+			String temp = "*";
+			for (int i = 0; i < items.size(); i++) {
+				temp += (items.get(i).getDate() + "*");
+			}
+			return temp;
 		}
 
 		@Override
@@ -161,4 +210,5 @@ public class MessageListAct extends Activity {
 		topBar.hiddenRightButton(true);
 		topBar.setTitle(getResources().getString(R.string.title));
 	}
+
 }

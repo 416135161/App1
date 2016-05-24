@@ -72,7 +72,7 @@ public class DBTool {
 		SQLiteDatabase db = new DatabaseHelper(context).getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.clear();
-		contentValues.put("id", System.currentTimeMillis());
+		contentValues.put("id", item.getId());
 		contentValues.put("phoneNo", item.getPhoneNo());
 		contentValues.put("body", item.getBody());
 		contentValues.put("date", item.getDate());
