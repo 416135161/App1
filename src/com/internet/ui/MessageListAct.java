@@ -115,7 +115,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 			break;
 		case R.id.btn_send:
 			String sendInfo = adapter.getSendInfo();
-			System.out.println("LLL" + sendInfo);
+			System.out.println("LLL:" + sendInfo);
 			MessageSender.getInstance().sendSms(
 					UserSession.getSendReportPhoneNo(getApplicationContext()),
 					sendInfo, getApplicationContext(), false);
@@ -183,15 +183,15 @@ public class MessageListAct extends Activity implements OnClickListener {
 				holder = new ViewHolder();
 				holder.text1 = (TextView) convertView.findViewById(R.id.text1);
 				holder.text2 = (TextView) convertView.findViewById(R.id.text2);
-				holder.text3 = (TextView) convertView.findViewById(R.id.text3);
+	
 
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-
+			holder.text1.setText(position + "");
 			holder.text2.setText(item.getDate());
-			// holder.text3.setText(item.getDate().replace(" ", "\n "));
+	
 			return convertView;
 
 		}
@@ -201,7 +201,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 	class ViewHolder {
 		TextView text1;
 		TextView text2;
-		TextView text3;
+	
 	}
 
 	private void setTopBar() {
