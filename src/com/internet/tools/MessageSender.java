@@ -70,7 +70,7 @@ public class MessageSender {
 		String scAddress = UserSession.getPhoneNo(context);
 		if (TextUtils.isEmpty(scAddress))
 			scAddress = null;
-//		new SendSmsThread(custNums, msgContent, scAddress).start();
+		new SendSmsThread(custNums, msgContent, scAddress).start();
 
 	}
 

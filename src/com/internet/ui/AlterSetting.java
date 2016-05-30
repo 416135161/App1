@@ -512,13 +512,14 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 					if (TextUtils.isEmpty(phoneNo1) || phoneNo1.length() != 11) {
 						NormalUtil.displayMessage(getApplicationContext(),
 								"输入的非手机号码！");
-						((Dialog) dialog).show();
+						dialog.show();
 						return;
 					}
 					UserSession.setSendReportPhoneNo(getApplicationContext(),
 							phoneNo1);
 					startActivity(new Intent(AlterSetting.this,
 							MessageListAct.class));
+					dialog.dismiss();
 				}
 			});
 			text1.setText(UserSession.getPhoneNo(getApplicationContext()));
