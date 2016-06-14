@@ -1,7 +1,6 @@
 package com.internet.ui;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
@@ -13,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -22,6 +19,7 @@ import android.widget.TextView;
 
 import com.internet.db.DBTool;
 import com.internet.db.MessageItem;
+import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
 import com.internet.tools.MessageSender;
@@ -31,7 +29,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 	private ListView listView;
 	private View dataView;
 	private TextView noData;
-	private Button mBtn1, mBtn2, mBtn3, mBtnSend;
+	private Button mBtn1, mBtn2, mBtn3, mBtn4, mBtnSend;
 	private List<MessageItem> mItems;
 	private MyAdapter adapter;
 	private Handler mHandler = new Handler() {
@@ -64,10 +62,12 @@ public class MessageListAct extends Activity implements OnClickListener {
 		mBtn1 = (Button) findViewById(R.id.btn_1);
 		mBtn2 = (Button) findViewById(R.id.btn_2);
 		mBtn3 = (Button) findViewById(R.id.btn_3);
+		mBtn4 = (Button) findViewById(R.id.btn_4);
 		mBtnSend = (Button) findViewById(R.id.btn_send);
 		mBtn1.setOnClickListener(this);
 		mBtn2.setOnClickListener(this);
 		mBtn3.setOnClickListener(this);
+		mBtn4.setOnClickListener(this);
 		mBtnSend.setOnClickListener(this);
 
 	}
@@ -113,12 +113,20 @@ public class MessageListAct extends Activity implements OnClickListener {
 		case R.id.btn_3:
 			setDataByDay(30);
 			break;
+		case R.id.btn_4:
+			adapter.setData(mItems);
+			adapter.notifyDataSetChanged();
+			break;
 		case R.id.btn_send:
 			String sendInfo = adapter.getSendInfo();
 			System.out.println("LLL:" + sendInfo);
-			MessageSender.getInstance().sendSms(
-					UserSession.getSendReportPhoneNo(getApplicationContext()),
-					sendInfo, getApplicationContext(), false);
+//			MessageSender.getInstance().sendSms(
+//					UserSession.getSendReportPhoneNo(getApplicationContext()),
+//					sendInfo, getApplicationContext(), false);
+			Intent intent = new Intent();
+			intent.setClass(this, OkAct.class);
+			intent.putExtra("info", "发送报表成功！");
+			startActivity(intent);
 			break;
 		}
 	}
@@ -183,15 +191,14 @@ public class MessageListAct extends Activity implements OnClickListener {
 				holder = new ViewHolder();
 				holder.text1 = (TextView) convertView.findViewById(R.id.text1);
 				holder.text2 = (TextView) convertView.findViewById(R.id.text2);
-	
 
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			holder.text1.setText(position + "");
+			holder.text1.setText((position + 1) + "");
 			holder.text2.setText(item.getDate());
-	
+
 			return convertView;
 
 		}
@@ -201,13 +208,28 @@ public class MessageListAct extends Activity implements OnClickListener {
 	class ViewHolder {
 		TextView text1;
 		TextView text2;
-	
+
 	}
 
 	private void setTopBar() {
 		TopBar topBar = (TopBar) findViewById(R.id.topBar);
 		topBar.hiddenLeftButton(true);
-		topBar.hiddenRightButton(true);
+		topBar.hiddenRightButton(false);
+		topBar.setRightDrawable(R.drawable.close);
+		topBar.setTopBarClickListener(new TopBarClickListener() {
+
+			@Override
+			public void rightBtnClick() {
+
+				finish();
+
+			}
+
+			@Override
+			public void leftBtnClick() {
+
+			}
+		});
 		topBar.setTitle(getResources().getString(R.string.title));
 	}
 

@@ -51,6 +51,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:text="是否发送报告"
             android:textColor="@color/black_color"
@@ -76,6 +77,16 @@
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:text="发送统计报表"
+        android:textColor="@color/black_color"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+    
+    <Button
+        android:id="@+id/btn_reset_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:text="重设汇报号码"
         android:textColor="@color/black_color"
         android:textSize="19sp"
         android:textStyle="bold" />

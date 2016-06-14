@@ -52,7 +52,7 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 
 	private CheckBox check_send_msg;
 
-	private Button mBtnSendReport;
+	private Button mBtnSendReport, mBtnResetNo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +124,14 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 		mBtnSendReport = (Button) findViewById(R.id.btn_send_report);
 		mBtnSendReport.setOnClickListener(this);
 
+		mBtnResetNo = (Button) findViewById(R.id.btn_reset_no);
+		mBtnResetNo.setOnClickListener(this);
+
+		if (TextUtils.isEmpty(UserSession
+				.getSendReportPhoneNo(getApplicationContext())))
+			mBtnResetNo.setVisibility(View.GONE);
+		else
+			mBtnResetNo.setVisibility(View.VISIBLE);
 	}
 
 	private void initRadioButton(RadioGroup group, int index) {
@@ -321,6 +329,9 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 				startActivity(new Intent(AlterSetting.this,
 						MessageListAct.class));
 			break;
+		case R.id.btn_reset_no:
+			showSendReportPhoneDlg();
+			break;
 		}
 	}
 
@@ -501,6 +512,7 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 			View view = getLayoutInflater().inflate(R.layout.send_report_phone,
 					null);
 			final EditText text1 = (EditText) view.findViewById(R.id.text1);
+			final EditText text2 = (EditText) view.findViewById(R.id.text2);
 			final Button button = (Button) view.findViewById(R.id.button);
 
 			button.setOnClickListener(new OnClickListener() {
@@ -509,9 +521,24 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					String phoneNo1 = text1.getEditableText().toString();
+					String phoneNo2 = text2.getEditableText().toString();
 					if (TextUtils.isEmpty(phoneNo1) || phoneNo1.length() != 11) {
 						NormalUtil.displayMessage(getApplicationContext(),
 								"输入的非手机号码！");
+						dialog.show();
+						return;
+					}
+
+					if (TextUtils.isEmpty(phoneNo2) || phoneNo2.length() != 11) {
+						NormalUtil.displayMessage(getApplicationContext(),
+								"重新输入的非手机号码！");
+						dialog.show();
+						return;
+					}
+
+					if (!TextUtils.equals(phoneNo1, phoneNo2)) {
+						NormalUtil.displayMessage(getApplicationContext(),
+								"请两次输入相同的手机号码！");
 						dialog.show();
 						return;
 					}
