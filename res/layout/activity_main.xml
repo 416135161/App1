@@ -25,8 +25,8 @@
                     android:layout_width="90dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="序号"
-                    android:textSize="20sp"
+                    android:text="条目序号"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -34,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="记录时间"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
 

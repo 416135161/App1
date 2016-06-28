@@ -76,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
-        android:text="发送统计报表"
+        android:text="是否实时发送"
         android:textColor="@color/black_color"
         android:textSize="19sp"
         android:textStyle="bold" />

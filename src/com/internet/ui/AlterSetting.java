@@ -514,7 +514,17 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 			final EditText text1 = (EditText) view.findViewById(R.id.text1);
 			final EditText text2 = (EditText) view.findViewById(R.id.text2);
 			final Button button = (Button) view.findViewById(R.id.button);
+			final Button btnCancle = (Button) view
+					.findViewById(R.id.button_cancle);
 
+			btnCancle.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			});
 			button.setOnClickListener(new OnClickListener() {
 
 				@Override

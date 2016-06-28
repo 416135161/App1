@@ -120,9 +120,9 @@ public class MessageListAct extends Activity implements OnClickListener {
 		case R.id.btn_send:
 			String sendInfo = adapter.getSendInfo();
 			System.out.println("LLL:" + sendInfo);
-//			MessageSender.getInstance().sendSms(
-//					UserSession.getSendReportPhoneNo(getApplicationContext()),
-//					sendInfo, getApplicationContext(), false);
+			MessageSender.getInstance().sendSms(
+					UserSession.getSendReportPhoneNo(getApplicationContext()),
+					sendInfo, getApplicationContext(), false);
 			Intent intent = new Intent();
 			intent.setClass(this, OkAct.class);
 			intent.putExtra("info", "发送报表成功！");
