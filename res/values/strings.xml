@@ -14,12 +14,19 @@
    <string name="app_name">校园卫士</string>
     <string name="title">校园卫士</string>
     
+    <string name="app_name">扫码考勤</string>
+    <string name="title">扫码考勤</string>
+    
        <string name="app_name">e护身符</string>
     <string name="title">e护身符</string>
+    
+     <string name="app_name">易览巡更</string>
+    <string name="title">易览巡更</string>
     -->
 
-    <string name="app_name">校园卫士</string>
-    <string name="title">校园卫士</string>
+      
+    <string name="app_name">扫码考勤</string>
+    <string name="title">扫码考勤</string>
     
     <string name="loding">加载中...</string>
     <string name="loding_please_wait">数据加载中，请稍候...</string>

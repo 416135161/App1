@@ -56,12 +56,14 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:src="@drawable/flash" />
-        <ImageView
+
+        <ImageView
             android:id="@+id/image1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:src="@drawable/remind" />
+            android:src="@drawable/remind"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/image2"

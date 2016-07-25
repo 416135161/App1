@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -60,6 +61,7 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.alter_setting);
 		setTopBar();
+		
 		check_send_msg = (CheckBox) findViewById(R.id.check_send_msg);
 		check_send_msg.setChecked(UserSession
 				.getCheckSendMsg(getApplicationContext()));
@@ -132,6 +134,8 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 			mBtnResetNo.setVisibility(View.GONE);
 		else
 			mBtnResetNo.setVisibility(View.VISIBLE);
+		
+//		setGoneBtn();
 	}
 
 	private void initRadioButton(RadioGroup group, int index) {
@@ -567,6 +571,12 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 		} else
 			dialog.show();
 
+	}
+	
+	private void setGoneBtn(){
+		((ViewGroup)check_send_msg.getParent()).setVisibility(View.GONE);
+		mBtnSendReport.setVisibility(View.GONE);
+		mBtnResetNo.setVisibility(View.GONE);
 	}
 
 }
