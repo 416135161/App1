@@ -139,6 +139,11 @@ public class DBTool {
 
 	}
 
+	public void deleteAll(Context context) {
+		SQLiteDatabase db = new DatabaseHelper(context).getWritableDatabase();
+		db.delete(DatabaseHelper.TABLE_SMS, null, null);
+	}
+
 	public static String getCurrentDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",
 				Locale.getDefault());

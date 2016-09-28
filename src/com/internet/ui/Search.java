@@ -56,6 +56,7 @@ import com.internet.tools.GetSDImage;
 import com.internet.tools.ImageUtil;
 import com.internet.tools.MessageSender;
 import com.internet.tools.NormalUtil;
+import com.internet.tools.UserSession;
 
 public class Search extends Activity implements SurfaceHolder.Callback {
 
@@ -364,6 +365,11 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 
 		WatchService.actionReschedule(getApplicationContext());
 		DBTool.getInstance().clearTimeout(getApplicationContext());
+		if (UserSession.isFirst(this)) {
+			NormalUtil.deletePath();
+			UserSession.setFirstFalse(this);
+			DBTool.getInstance().deleteAll(this);
+		}
 
 	}
 

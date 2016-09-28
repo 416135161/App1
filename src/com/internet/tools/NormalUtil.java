@@ -1,5 +1,6 @@
 package com.internet.tools;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import android.app.Activity;
@@ -24,6 +25,25 @@ public class NormalUtil {
 			return Environment.getDataDirectory().getAbsolutePath() + "/";
 		}
 	}
+
+	public static void deletePath() {
+		String path;
+		if (isHasSdcard()) {
+			path = Environment.getExternalStorageDirectory().getAbsolutePath()
+					+ "/YLTbak";
+		} else {
+			path = Environment.getDataDirectory().getAbsolutePath() + "";
+		}
+
+		try {
+			FileUtil.del(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	private static boolean isHasSdcard() {
 		String status = Environment.getExternalStorageState();
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
@@ -32,12 +52,13 @@ public class NormalUtil {
 			return false;
 		}
 	}
+
 	public static String getSystemTime() {
 		SimpleDateFormat tempDate = new SimpleDateFormat("MM-dd-HH-mm-ss");
 		String datetime = tempDate.format(new java.util.Date());
 		return datetime;
 	}
-	
+
 	public static void displayFrameworkBugMessageAndExit(final Activity activity) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setTitle(activity.getString(R.string.app_name));
@@ -66,13 +87,13 @@ public class NormalUtil {
 		Toast.makeText(context.getApplicationContext(), message,
 				Toast.LENGTH_SHORT).show();
 	}
-	
+
 	public static DisplayMetrics getDM(Activity activity) {
 		DisplayMetrics dm = new DisplayMetrics();
 		activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
 		return dm;
 	}
-	
+
 	/**
 	 * 获取存储的公共数据
 	 * 

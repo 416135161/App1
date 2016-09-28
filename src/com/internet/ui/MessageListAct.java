@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,15 +25,17 @@ import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
 import com.internet.tools.MessageSender;
+import com.internet.tools.NormalUtil;
 import com.internet.tools.UserSession;
 
 public class MessageListAct extends Activity implements OnClickListener {
 	private ListView listView;
 	private View dataView;
 	private TextView noData;
-	private Button mBtn1, mBtn2, mBtn3, mBtn4, mBtnSend;
+	private Button mBtn1, mBtn2, mBtn3, mBtn4, mBtnSend, mBtnClean;
 	private List<MessageItem> mItems;
 	private MyAdapter adapter;
+	private Dialog deleteDialog;
 	private Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -63,11 +67,13 @@ public class MessageListAct extends Activity implements OnClickListener {
 		mBtn2 = (Button) findViewById(R.id.btn_2);
 		mBtn3 = (Button) findViewById(R.id.btn_3);
 		mBtn4 = (Button) findViewById(R.id.btn_4);
+		mBtnClean = (Button) findViewById(R.id.btn_clean);
 		mBtnSend = (Button) findViewById(R.id.btn_send);
 		mBtn1.setOnClickListener(this);
 		mBtn2.setOnClickListener(this);
 		mBtn3.setOnClickListener(this);
 		mBtn4.setOnClickListener(this);
+		mBtnClean.setOnClickListener(this);
 		mBtnSend.setOnClickListener(this);
 
 	}
@@ -88,9 +94,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 				mItems = DBTool.getInstance().getSavedMessage(
 						getApplicationContext());
 				System.out.println("JJJJJJJJJJJJJJJJJJ");
-				if (mItems != null) {
-					adapter.setData(mItems);
-				}
+				adapter.setData(mItems);
 				mHandler.sendEmptyMessage(0);
 			}
 
@@ -117,12 +121,48 @@ public class MessageListAct extends Activity implements OnClickListener {
 			adapter.setData(mItems);
 			adapter.notifyDataSetChanged();
 			break;
+		case R.id.btn_clean:
+			View view = getLayoutInflater().inflate(
+					R.layout.dlg_delete, null);
+			final Button button = (Button) view.findViewById(R.id.button);
+			final Button btnCancle = (Button) view
+					.findViewById(R.id.button_cancle);
+			view.findViewById(R.id.text_tip).setVisibility(View.VISIBLE);
+
+			btnCancle.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					deleteDialog.dismiss();
+				}
+			});
+			button.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					DBTool.getInstance().deleteAll(
+							MessageListAct.this);
+					NormalUtil.deletePath();
+					initListView();
+					deleteDialog.dismiss();
+				}
+			});
+			deleteDialog = new AlertDialog.Builder(this).setView(view).create();
+			deleteDialog.setCanceledOnTouchOutside(true);
+			deleteDialog.show();
+			break;
 		case R.id.btn_send:
-			String sendInfo = adapter.getSendInfo();
-			System.out.println("LLL:" + sendInfo);
-			MessageSender.getInstance().sendSms(
-					UserSession.getSendReportPhoneNo(getApplicationContext()),
-					sendInfo, getApplicationContext(), false);
+			List<String> sendInfo = adapter.getSendInfo();
+
+			for (String info : sendInfo) {
+				MessageSender
+						.getInstance()
+						.sendSms(
+								UserSession
+										.getSendReportPhoneNo(getApplicationContext()),
+								info, getApplicationContext(), false);
+				System.out.println("LLL:" + info);
+			}
+
 			Intent intent = new Intent();
 			intent.setClass(this, OkAct.class);
 			intent.putExtra("info", "发送报表成功！");
@@ -150,16 +190,32 @@ public class MessageListAct extends Activity implements OnClickListener {
 
 		public void setData(List<MessageItem> tasks) {
 			this.items.clear();
-			this.items.addAll(tasks);
+			if (tasks != null && !tasks.isEmpty())
+				this.items.addAll(tasks);
 
 		}
 
-		public String getSendInfo() {
-			String temp = "*";
-			for (int i = 0; i < items.size(); i++) {
-				temp += (items.get(i).getDate() + "*");
+		public List<String> getSendInfo() {
+
+			List<String> temps = new ArrayList<String>();
+			int size = items.size();
+			int length = 6;
+			int aaa = size / length + 1;
+			int hhh = size % length;
+			for (int i = 0; i < aaa; i++) {
+				int ccc;
+				if (i == aaa - 1) {
+					ccc = hhh;
+				} else {
+					ccc = length;
+				}
+				String temp = "*";
+				for (int j = 0; j < ccc; j++) {
+					temp += (items.get(i * length + j).getDate() + "*");
+				}
+				temps.add(temp);
 			}
-			return temp;
+			return temps;
 		}
 
 		@Override
