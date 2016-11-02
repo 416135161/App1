@@ -16,7 +16,7 @@
     android:icon="@drawable/app1_logo"
     -->
     <application
-         android:icon="@drawable/eposton_72" 
+        android:icon="@drawable/app1_logo"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
         <activity
@@ -24,7 +24,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
-             
+            
         </activity>
         <activity
             android:name="com.internet.ui.LogoAct"
