@@ -10,6 +10,7 @@ public class MessageItem implements java.io.Serializable
 	private String phoneNo;
 	private String date;
 	private String photoPath;
+	private String tag;
 
 	public MessageItem() {
 	}
@@ -55,5 +56,14 @@ public class MessageItem implements java.io.Serializable
 	public void setPhotoPath(String photoPath) {
 		this.photoPath = photoPath;
 	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+	
 
 }

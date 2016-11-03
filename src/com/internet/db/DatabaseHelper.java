@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-	private static final int VERSION = 1;
+	private static final int VERSION = 2;
 	// 本地数据库的名字
 	public static final String DATA_NAME = "sms_data.db";// 聊天记录信息表
 	// 巡检项表
@@ -33,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String sqlStr1 = "create table "
 				+ TABLE_SMS
 				+ "(id text primary key not null, body text, date text,"
-				+ " phoneNo text, photoPath text)";
+				+ " phoneNo text, photoPath text, tag text)";
 		db.execSQL(sqlStr1);
 
 	}

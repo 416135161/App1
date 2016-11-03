@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:src="@drawable/remind"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/image2"

@@ -49,6 +49,7 @@ public class DBTool {
 						.getColumnIndex("phoneNo")));
 				message.setPhotoPath(cursor.getString(cursor
 						.getColumnIndex("photoPath")));
+				message.setTag(cursor.getString(cursor.getColumnIndex("tag")));
 				list.add(message);
 
 			}
@@ -78,6 +79,7 @@ public class DBTool {
 		contentValues.put("date", item.getDate());
 		System.out.println(contentValues.get("date"));
 		contentValues.put("photoPath", item.getPhotoPath());
+		contentValues.put("tag", item.getTag());
 		db.insert(DatabaseHelper.TABLE_SMS, null, contentValues);
 		Cursor cursor = db.rawQuery("SELECT * FROM table_sms ", null);
 		int count = cursor.getCount();
@@ -113,7 +115,7 @@ public class DBTool {
 						.getColumnIndex("phoneNo")));
 				message.setPhotoPath(cursor.getString(cursor
 						.getColumnIndex("photoPath")));
-
+				message.setTag(cursor.getString(cursor.getColumnIndex("tag")));
 				list.add(message);
 
 			}

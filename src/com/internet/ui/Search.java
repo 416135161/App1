@@ -25,6 +25,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -98,7 +99,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 	private String lastContent;
 
 	private int total, current;
-	private char tag;
+	private String tag;
 	private String waitSend = "";
 
 	private boolean flashLightState = false;
@@ -134,12 +135,12 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 								&& biaoji.charAt(1) == '/') { // 判断是否包含页码标签
 							System.out.println("进入页码模式");
 							int n = 0, N = 0;
-							char c = 0;
+							String c = "";
 							try {
 								n = Integer.valueOf(biaoji.charAt(0) + "");
 								N = Integer.valueOf(biaoji.charAt(2) + "");
-								if (biaoji.length() == 4)
-									c = biaoji.charAt(3);
+								if (biaoji.length() > 3)
+									c = biaoji.substring(3);
 							} catch (NumberFormatException e) {
 								e.printStackTrace();
 							}
@@ -170,7 +171,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 												"失败！请按编号顺序重新扫描！");
 									}
 									resetPreview();
-								} else if (N == total && c == tag) {// 判断获取的页码总数是否跟之前获取的一致
+								} else if (N == total && TextUtils.equals(c, tag)) {// 判断获取的页码总数是否跟之前获取的一致
 									if (n == current + 1) { // 判断当前页码是否为正确的顺序
 
 										if (n == N) { // 当前扫描页码为最后一页
@@ -246,7 +247,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 												getApplicationContext(),
 												"失败！请按编号顺序重新扫描！");
 									}
-								} else if (N == total && c != tag) {
+								} else if (N == total && !TextUtils.equals(c, tag)) {
 									current = 0;
 									total = 0;
 									waitSend = "";
@@ -749,6 +750,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		item.setPhotoPath(imgPath);
 		item.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 		item.setId(date.getTime());
+		item.setTag(tag);
 		DBTool.getInstance().saveMessage(getApplicationContext(), item);
 	}
 
