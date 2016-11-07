@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -122,8 +123,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 			adapter.notifyDataSetChanged();
 			break;
 		case R.id.btn_clean:
-			View view = getLayoutInflater().inflate(
-					R.layout.dlg_delete, null);
+			View view = getLayoutInflater().inflate(R.layout.dlg_delete, null);
 			final Button button = (Button) view.findViewById(R.id.button);
 			final Button btnCancle = (Button) view
 					.findViewById(R.id.button_cancle);
@@ -139,8 +139,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 
 				@Override
 				public void onClick(View v) {
-					DBTool.getInstance().deleteAll(
-							MessageListAct.this);
+					DBTool.getInstance().deleteAll(MessageListAct.this);
 					NormalUtil.deletePath();
 					initListView();
 					deleteDialog.dismiss();
@@ -160,7 +159,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 								UserSession
 										.getSendReportPhoneNo(getApplicationContext()),
 								info, getApplicationContext(), false);
-				System.out.println("LLL:" + info);
+				Log.e("LLL:" , info);
 			}
 
 			Intent intent = new Intent();
@@ -211,7 +210,11 @@ public class MessageListAct extends Activity implements OnClickListener {
 				}
 				String temp = "*";
 				for (int j = 0; j < ccc; j++) {
-					temp += (items.get(i * length + j).getDate() + "*");
+					MessageItem item = items.get(i * length + j);
+					if (item.getTag() != "")
+						temp += (item.getDate() + "  " + item.getTag() + "*");
+					else
+						temp += (item.getDate() + "*");
 				}
 				temps.add(temp);
 			}
@@ -247,14 +250,14 @@ public class MessageListAct extends Activity implements OnClickListener {
 				holder = new ViewHolder();
 				holder.text1 = (TextView) convertView.findViewById(R.id.text1);
 				holder.text2 = (TextView) convertView.findViewById(R.id.text2);
-
+				holder.text3 = (TextView) convertView.findViewById(R.id.text3);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			holder.text1.setText((position + 1) + "");
 			holder.text2.setText(item.getDate());
-
+			holder.text3.setText(item.getTag());
 			return convertView;
 
 		}
@@ -264,7 +267,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 	class ViewHolder {
 		TextView text1;
 		TextView text2;
-
+		TextView text3;
 	}
 
 	private void setTopBar() {

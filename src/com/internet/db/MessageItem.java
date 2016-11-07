@@ -1,5 +1,7 @@
 package com.internet.db;
 
+import android.text.TextUtils;
+
 public class MessageItem implements java.io.Serializable
 
 {
@@ -14,7 +16,7 @@ public class MessageItem implements java.io.Serializable
 
 	public MessageItem() {
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -22,8 +24,6 @@ public class MessageItem implements java.io.Serializable
 	public void setId(long id) {
 		this.id = id;
 	}
-
-
 
 	public String getBody() {
 		return body;
@@ -58,12 +58,13 @@ public class MessageItem implements java.io.Serializable
 	}
 
 	public String getTag() {
+		if (TextUtils.isEmpty(tag))
+			tag = "";
 		return tag;
 	}
 
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	
 
 }

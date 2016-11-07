@@ -30,7 +30,7 @@ public class OkAct extends Activity {
 		content = (TextView) findViewById(R.id.text_content);
 		startAnimation();
 		String info = getIntent().getStringExtra("info");
-//		text_info.setText( "\n" + info );
+		text_info.setText( "\n" + info );
 	}
 
 	
