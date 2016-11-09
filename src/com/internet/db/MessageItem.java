@@ -59,7 +59,7 @@ public class MessageItem implements java.io.Serializable
 
 	public String getTag() {
 		if (TextUtils.isEmpty(tag))
-			tag = "";
+			tag = "-";
 		return tag;
 	}
 
