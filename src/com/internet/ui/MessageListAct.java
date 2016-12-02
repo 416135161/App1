@@ -1,11 +1,14 @@
 package com.internet.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,11 +23,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.internet.db.DBTool;
 import com.internet.db.MessageItem;
 import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
+import com.internet.tools.HttpUtil;
 import com.internet.tools.MessageSender;
 import com.internet.tools.NormalUtil;
 import com.internet.tools.UserSession;
@@ -159,7 +167,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 								UserSession
 										.getSendReportPhoneNo(getApplicationContext()),
 								info, getApplicationContext(), false);
-				Log.e("LLL:" , info);
+				Log.e("LLL:", info);
 			}
 
 			Intent intent = new Intent();
@@ -290,6 +298,33 @@ public class MessageListAct extends Activity implements OnClickListener {
 			}
 		});
 		topBar.setTitle(getResources().getString(R.string.title));
+	}
+
+	private void sendInternet(final String sendData, Context context) {
+		StringRequest stringRequest = new StringRequest(Request.Method.POST,
+				HttpUtil.SERVER_ADDRESS + "app/comment/add.do",
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						Log.d("TAG", response);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+						Log.e("TAG", error.getMessage(), error);
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() {
+				// 在这里设置需要post的参数
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("data", sendData);
+				return map;
+			}
+		};
+
+		HttpUtil.getInstance().addRequest(stringRequest, context);
 	}
 
 }
