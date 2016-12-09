@@ -29,10 +29,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.internet.db.DBTool;
 import com.internet.db.MessageItem;
+import com.internet.entity.SendBean;
+import com.internet.entity.SendBean.ContentItem;
 import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
 import com.internet.tools.HttpUtil;
+import com.internet.tools.JsonUtil;
 import com.internet.tools.MessageSender;
 import com.internet.tools.NormalUtil;
 import com.internet.tools.UserSession;
@@ -158,22 +161,36 @@ public class MessageListAct extends Activity implements OnClickListener {
 			deleteDialog.show();
 			break;
 		case R.id.btn_send:
-			List<String> sendInfo = adapter.getSendInfo();
+			// List<String> sendInfo = adapter.getSendInfo();
+			//
+			// for (String info : sendInfo) {
+			// MessageSender
+			// .getInstance()
+			// .sendSms(
+			// UserSession
+			// .getSendReportPhoneNo(getApplicationContext()),
+			// info, getApplicationContext(), false);
+			// Log.e("LLL:", info);
+			// }
+			//
+			// Intent intent = new Intent();
+			// intent.setClass(this, OkAct.class);
+			// intent.putExtra("info", "发送报表成功！");
+			// startActivity(intent);
 
-			for (String info : sendInfo) {
-				MessageSender
-						.getInstance()
-						.sendSms(
-								UserSession
-										.getSendReportPhoneNo(getApplicationContext()),
-								info, getApplicationContext(), false);
-				Log.e("LLL:", info);
-			}
+//			 SendBean sendBean = new SendBean();
+//			 sendBean.setPhone("15198216330");
+//			 sendBean.setRecivephone("15198216550");
+//			 sendBean.setComdate(System.currentTimeMillis() + "");
+//			 ArrayList<ContentItem> contents = new ArrayList<ContentItem>();
+//			 ContentItem item = new ContentItem();
+//			 item.setDate("2016-12-06 11:12:24");
+//			 item.setTag("12");
+//			 contents.add(item);
+//			 sendBean.setContents(contents);
+//			 sendInternet(JsonUtil.objectToJson(sendBean), this);
 
-			Intent intent = new Intent();
-			intent.setClass(this, OkAct.class);
-			intent.putExtra("info", "发送报表成功！");
-			startActivity(intent);
+			getInternet(this);
 			break;
 		}
 	}
@@ -320,6 +337,34 @@ public class MessageListAct extends Activity implements OnClickListener {
 				// 在这里设置需要post的参数
 				Map<String, String> map = new HashMap<String, String>();
 				map.put("data", sendData);
+				return map;
+			}
+		};
+
+		HttpUtil.getInstance().addRequest(stringRequest, context);
+	}
+
+	private void getInternet(Context context) {
+		StringRequest stringRequest = new StringRequest(Request.Method.POST,
+				HttpUtil.SERVER_ADDRESS + "app/comment/list.do",
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						Log.e("TAG", response);
+						
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+						Log.e("TAG", error.getMessage(), error);
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() {
+				// 在这里设置需要post的参数
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("recivephone", "15198216550");
 				return map;
 			}
 		};

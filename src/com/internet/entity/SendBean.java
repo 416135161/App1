@@ -1,10 +1,12 @@
 package com.internet.entity;
 
+import java.util.ArrayList;
+
 public class SendBean {
 
 	private String phone;
 	private String recivephone;
-	private String contents;
+	private ArrayList<ContentItem> contents;
 	private String comdate;
 
 	public SendBean() {
@@ -27,11 +29,11 @@ public class SendBean {
 		this.recivephone = recivephone;
 	}
 
-	public String getContents() {
+	public ArrayList<ContentItem> getContents() {
 		return contents;
 	}
 
-	public void setContents(String contents) {
+	public void setContents(ArrayList<ContentItem> contents) {
 		this.contents = contents;
 	}
 
@@ -41,6 +43,28 @@ public class SendBean {
 
 	public void setComdate(String comdate) {
 		this.comdate = comdate;
+	}
+
+	public static class ContentItem {
+		private String date;
+		private String tag;
+
+		public String getDate() {
+			return date;
+		}
+
+		public void setDate(String date) {
+			this.date = date;
+		}
+
+		public String getTag() {
+			return tag;
+		}
+
+		public void setTag(String tag) {
+			this.tag = tag;
+		}
+
 	}
 
 }
