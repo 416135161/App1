@@ -21,6 +21,8 @@ public class UserSession {
 
 	private static final String IS_FIRST = "is_first";
 
+	private static final String MY_PHONE = "my_phone";
+
 	public static int getType(Context context, int index) {
 		String type = NormalUtil.getPreference(context, TYPE_KEY + index);
 		if (type.equals("")) {
@@ -102,6 +104,17 @@ public class UserSession {
 		SharedPreferences sharedPreferences = context.getSharedPreferences(
 				Constants.SPNAME, Context.MODE_PRIVATE);
 		sharedPreferences.edit().putBoolean(IS_FIRST, false).commit();
+	}
+
+	public static String getMyPhone(Context context) {
+		return context.getSharedPreferences(Constants.SPNAME,
+				Context.MODE_PRIVATE).getString(MY_PHONE, "");
+	}
+
+	public static void setMyPhone(Context context, String phone) {
+		SharedPreferences sharedPreferences = context.getSharedPreferences(
+				Constants.SPNAME, Context.MODE_PRIVATE);
+		sharedPreferences.edit().putString(MY_PHONE, phone).commit();
 	}
 
 }

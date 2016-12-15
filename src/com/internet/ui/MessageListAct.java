@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,7 +46,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 	private ListView listView;
 	private View dataView;
 	private TextView noData;
-	private Button mBtn1, mBtn2, mBtn3, mBtn4, mBtnSend, mBtnClean;
+	private Button mBtn1, mBtn2, mBtn3, mBtn4, mBtnSend, mBtnClean,
+			mBtnNetSend;
 	private List<MessageItem> mItems;
 	private MyAdapter adapter;
 	private Dialog deleteDialog;
@@ -81,12 +84,14 @@ public class MessageListAct extends Activity implements OnClickListener {
 		mBtn4 = (Button) findViewById(R.id.btn_4);
 		mBtnClean = (Button) findViewById(R.id.btn_clean);
 		mBtnSend = (Button) findViewById(R.id.btn_send);
+		mBtnNetSend = (Button) findViewById(R.id.btn_net_send);
 		mBtn1.setOnClickListener(this);
 		mBtn2.setOnClickListener(this);
 		mBtn3.setOnClickListener(this);
 		mBtn4.setOnClickListener(this);
 		mBtnClean.setOnClickListener(this);
 		mBtnSend.setOnClickListener(this);
+		mBtnNetSend.setOnClickListener(this);
 
 	}
 
@@ -176,19 +181,20 @@ public class MessageListAct extends Activity implements OnClickListener {
 			intent.setClass(this, OkAct.class);
 			intent.putExtra("info", "发送报表成功！");
 			startActivity(intent);
-
-			// SendBean sendBean = new SendBean();
-			// sendBean.setPhone("15198216330");
-			// sendBean.setRecivephone("15198216550");
-			// sendBean.setComdate(System.currentTimeMillis() + "");
-			// ArrayList<ContentItem> contents = new ArrayList<ContentItem>();
-			// ContentItem item = new ContentItem();
-			// item.setDate("2016-12-06 11:12:24");
-			// item.setTag("12");
-			// contents.add(item);
-			// sendBean.setContents(contents);
-			// sendInternet(JsonUtil.objectToJson(sendBean), this);
-
+			break;
+		case R.id.btn_net_send:
+			SendBean sendBean = new SendBean();
+			sendBean.setPhone(UserSession.getMyPhone(getApplicationContext()));
+			sendBean.setRecivephone(UserSession
+					.getSendReportPhoneNo(getApplicationContext()));
+			sendBean.setComdate(System.currentTimeMillis() + "");
+			sendBean.setContents(adapter.getNetSendInfo());
+			if (TextUtils.isEmpty(UserSession
+					.getMyPhone(getApplicationContext()))) {
+				showSetMyPhoneDlg();
+			} else {
+				sendInternet(JsonUtil.objectToJson(sendBean), this);
+			}
 			break;
 		}
 	}
@@ -215,6 +221,17 @@ public class MessageListAct extends Activity implements OnClickListener {
 			if (tasks != null && !tasks.isEmpty())
 				this.items.addAll(tasks);
 
+		}
+
+		public ArrayList<ContentItem> getNetSendInfo() {
+			ArrayList<ContentItem> contents = new ArrayList<ContentItem>();
+			for (MessageItem messageItem : items) {
+				ContentItem item = new ContentItem();
+				item.setDate(messageItem.getDate());
+				item.setTag(messageItem.getTag());
+				contents.add(item);
+			}
+			return contents;
 		}
 
 		public List<String> getSendInfo() {
@@ -316,18 +333,26 @@ public class MessageListAct extends Activity implements OnClickListener {
 	}
 
 	private void sendInternet(final String sendData, Context context) {
+		showWaitDialog();
+		System.out.println(sendData);
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,
 				HttpUtil.SERVER_ADDRESS + "app/comment/add.do",
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
 						Log.d("TAG", response);
+						closeWaitDialog();
+						NormalUtil.displayMessage(getApplicationContext(),
+								"发送数据成功");
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 
 						Log.e("TAG", error.getMessage(), error);
+						closeWaitDialog();
+						NormalUtil.displayMessage(getApplicationContext(),
+								"发送数据失败，请检查网络");
 					}
 				}) {
 			@Override
@@ -340,6 +365,84 @@ public class MessageListAct extends Activity implements OnClickListener {
 		};
 
 		HttpUtil.getInstance().addRequest(stringRequest, context);
+	}
+
+	private Dialog dialog;
+
+	private void showSetMyPhoneDlg() {
+		if (dialog == null) {
+			View view = getLayoutInflater()
+					.inflate(R.layout.set_my_phone, null);
+			final EditText text1 = (EditText) view.findViewById(R.id.text1);
+			final EditText text2 = (EditText) view.findViewById(R.id.text2);
+			final Button button = (Button) view.findViewById(R.id.button);
+			final Button btnCancle = (Button) view
+					.findViewById(R.id.button_cancle);
+
+			btnCancle.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			});
+			button.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					String phoneNo1 = text1.getEditableText().toString();
+					String phoneNo2 = text2.getEditableText().toString();
+					if (TextUtils.isEmpty(phoneNo1) || phoneNo1.length() != 11) {
+						NormalUtil.displayMessage(getApplicationContext(),
+								"输入的非手机号码！");
+						dialog.show();
+						return;
+					}
+
+					if (TextUtils.isEmpty(phoneNo2) || phoneNo2.length() != 11) {
+						NormalUtil.displayMessage(getApplicationContext(),
+								"重新输入的非手机号码！");
+						dialog.show();
+						return;
+					}
+
+					if (!TextUtils.equals(phoneNo1, phoneNo2)) {
+						NormalUtil.displayMessage(getApplicationContext(),
+								"请两次输入相同的手机号码！");
+						dialog.show();
+						return;
+					}
+					UserSession.setMyPhone(getApplicationContext(), phoneNo1);
+
+					dialog.dismiss();
+				}
+			});
+			dialog = new AlertDialog.Builder(this).setView(view).create();
+			dialog.setCanceledOnTouchOutside(false);
+			dialog.show();
+		} else
+			dialog.show();
+
+	}
+
+	private Dialog waitDialog;
+
+	private void showWaitDialog() {
+		if (waitDialog == null) {
+			View view = getLayoutInflater().inflate(
+					R.layout.common_dialog_loading_layout, null);
+			waitDialog = new AlertDialog.Builder(this).setView(view).create();
+			waitDialog.setCanceledOnTouchOutside(false);
+			waitDialog.show();
+		} else
+			waitDialog.show();
+	}
+
+	private void closeWaitDialog() {
+		if (waitDialog != null && waitDialog.isShowing())
+			waitDialog.dismiss();
 	}
 
 }
