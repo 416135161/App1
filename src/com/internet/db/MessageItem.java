@@ -13,6 +13,9 @@ public class MessageItem implements java.io.Serializable
 	private String date;
 	private String photoPath;
 	private String tag;
+	private String photo;
+	
+	private String info; //扫描到的内容
 
 	public MessageItem() {
 	}
@@ -66,5 +69,25 @@ public class MessageItem implements java.io.Serializable
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	
+	
+	
+	
 
 }

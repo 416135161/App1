@@ -50,6 +50,7 @@ public class DBTool {
 				message.setPhotoPath(cursor.getString(cursor
 						.getColumnIndex("photoPath")));
 				message.setTag(cursor.getString(cursor.getColumnIndex("tag")));
+				message.setInfo(cursor.getString(cursor.getColumnIndex("info")));
 				list.add(message);
 
 			}
@@ -66,6 +67,31 @@ public class DBTool {
 		return list;
 	}
 
+	public String getPhoto(Context context, long id) {
+		String photo = null;
+		SQLiteDatabase db = new DatabaseHelper(context).getWritableDatabase();
+
+		Cursor cursor = null;
+		try {
+			cursor = db.query("table_sms", null, "id= ?", new String[] { id
+					+ "" }, null, null, null);
+			if (cursor.getColumnCount() > 0) {
+				cursor.moveToFirst();
+				photo = cursor.getString(cursor.getColumnIndex("photo"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
+			if (db != null && db.isOpen()) {
+				db.close();
+			}
+		}
+		return photo;
+	}
+
 	public synchronized void saveMessage(Context context, MessageItem item) {
 		if (item == null)
 			return;
@@ -80,6 +106,8 @@ public class DBTool {
 		System.out.println(contentValues.get("date"));
 		contentValues.put("photoPath", item.getPhotoPath());
 		contentValues.put("tag", item.getTag());
+		contentValues.put("info", item.getInfo());
+		contentValues.put("photo", item.getPhoto());
 		db.insert(DatabaseHelper.TABLE_SMS, null, contentValues);
 		Cursor cursor = db.rawQuery("SELECT * FROM table_sms ", null);
 		int count = cursor.getCount();
@@ -92,9 +120,7 @@ public class DBTool {
 
 		}
 		db.close();
-		if (photoPath != null) {
-			FileUtil.deleteFile(photoPath);
-		}
+
 	}
 
 	public synchronized void clearTimeout(Context context) {

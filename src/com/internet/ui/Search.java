@@ -171,7 +171,8 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 												"失败！请按编号顺序重新扫描！");
 									}
 									resetPreview();
-								} else if (N == total && TextUtils.equals(c, tag)) {// 判断获取的页码总数是否跟之前获取的一致
+								} else if (N == total
+										&& TextUtils.equals(c, tag)) {// 判断获取的页码总数是否跟之前获取的一致
 									if (n == current + 1) { // 判断当前页码是否为正确的顺序
 
 										if (n == N) { // 当前扫描页码为最后一页
@@ -209,7 +210,8 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 																		true);
 													}
 												}
-												saveBitmap(item.getBarcode());
+												saveBitmap(item.getBarcode(),
+														array2[0]);
 												Message message = Message
 														.obtain();
 												message.obj = array2[0];
@@ -247,7 +249,8 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 												getApplicationContext(),
 												"失败！请按编号顺序重新扫描！");
 									}
-								} else if (N == total && !TextUtils.equals(c, tag)) {
+								} else if (N == total
+										&& !TextUtils.equals(c, tag)) {
 									current = 0;
 									total = 0;
 									waitSend = "";
@@ -277,7 +280,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 												getApplicationContext(), true);
 							}
 						}
-						saveBitmap(item.getBarcode());
+						saveBitmap(item.getBarcode(), array[0]);
 						Message message = Message.obtain();
 						message.obj = array[0];
 						message.what = 3;
@@ -348,9 +351,9 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				List<String> list = GetSDImage.getImgPathList(NormalUtil
-						.getRootDir());
-				if (list.size() == 0)
+				List<MessageItem> list = DBTool.getInstance().getSavedMessage(
+						getApplicationContext());
+				if (list == null || list.size() == 0)
 					NormalUtil.displayMessage(getApplicationContext(),
 							"暂无保存图片可以查看");
 				else {
@@ -739,18 +742,19 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		return result;
 	}
 
-	private void saveBitmap(Bitmap bitmap) {
+	private void saveBitmap(Bitmap bitmap, String info) {
 		Date date = new java.util.Date();
 		String dateTime = new SimpleDateFormat("MM-dd-HH-mm-ss").format(date);
 		String imgName = dateTime + ".jpg";
 		String imgPath = NormalUtil.getRootDir() + imgName;
-		bitmap = ImageUtil.setBitmapRotate(90, bitmap);
-		ImageUtil.saveBitmapToSDcard(imgPath, bitmap, 100);
 		MessageItem item = new MessageItem();
 		item.setPhotoPath(imgPath);
 		item.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 		item.setId(date.getTime());
 		item.setTag(tag);
+		item.setInfo(info);
+		bitmap = ImageUtil.setBitmapRotate(90, bitmap);
+		item.setPhoto(NormalUtil.bitmapToBase64(bitmap));
 		DBTool.getInstance().saveMessage(getApplicationContext(), item);
 	}
 

@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,8 +47,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 	private ListView listView;
 	private View dataView;
 	private TextView noData;
-	private Button mBtn1, mBtn2, mBtn3, mBtn4, mBtnSend, mBtnClean,
-			mBtnNetSend;
+	private Button mBtn1, mBtn2, mBtn3, mBtn4, mBtnSend, mBtnClean;
 	private List<MessageItem> mItems;
 	private MyAdapter adapter;
 	private Dialog deleteDialog;
@@ -84,14 +84,12 @@ public class MessageListAct extends Activity implements OnClickListener {
 		mBtn4 = (Button) findViewById(R.id.btn_4);
 		mBtnClean = (Button) findViewById(R.id.btn_clean);
 		mBtnSend = (Button) findViewById(R.id.btn_send);
-		mBtnNetSend = (Button) findViewById(R.id.btn_net_send);
 		mBtn1.setOnClickListener(this);
 		mBtn2.setOnClickListener(this);
 		mBtn3.setOnClickListener(this);
 		mBtn4.setOnClickListener(this);
 		mBtnClean.setOnClickListener(this);
 		mBtnSend.setOnClickListener(this);
-		mBtnNetSend.setOnClickListener(this);
 
 	}
 
@@ -166,35 +164,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 			deleteDialog.show();
 			break;
 		case R.id.btn_send:
-			List<String> sendInfo = adapter.getSendInfo();
-			for (String info : sendInfo) {
-				MessageSender
-						.getInstance()
-						.sendSms(
-								UserSession
-										.getSendReportPhoneNo(getApplicationContext()),
-								info, getApplicationContext(), false);
-				Log.e("LLL:", info);
-			}
-
-			Intent intent = new Intent();
-			intent.setClass(this, OkAct.class);
-			intent.putExtra("info", "发送报表成功！");
-			startActivity(intent);
-			break;
-		case R.id.btn_net_send:
-			SendBean sendBean = new SendBean();
-			sendBean.setPhone(UserSession.getMyPhone(getApplicationContext()));
-			sendBean.setRecivephone(UserSession
-					.getSendReportPhoneNo(getApplicationContext()));
-			sendBean.setComdate(System.currentTimeMillis() + "");
-			sendBean.setContents(adapter.getNetSendInfo());
-			if (TextUtils.isEmpty(UserSession
-					.getMyPhone(getApplicationContext()))) {
-				showSetMyPhoneDlg();
-			} else {
-				sendInternet(JsonUtil.objectToJson(sendBean), this);
-			}
+			showSendDialog();
 			break;
 		}
 	}
@@ -443,6 +413,59 @@ public class MessageListAct extends Activity implements OnClickListener {
 	private void closeWaitDialog() {
 		if (waitDialog != null && waitDialog.isShowing())
 			waitDialog.dismiss();
+	}
+
+	private void showSendDialog() {
+		new AlertDialog.Builder(this)
+				.setTitle("请选择发送方式")
+				.setNegativeButton("短信发送",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								messageSend();
+							}
+						})
+				.setPositiveButton("网络发送",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								netSend();
+							}
+						}).create().show();
+
+	}
+
+	private void messageSend() {
+		List<String> sendInfo = adapter.getSendInfo();
+		for (String info : sendInfo) {
+			MessageSender.getInstance().sendSms(
+					UserSession.getSendReportPhoneNo(getApplicationContext()),
+					info, getApplicationContext(), false);
+			Log.e("LLL:", info);
+		}
+
+		Intent intent = new Intent();
+		intent.setClass(this, OkAct.class);
+		intent.putExtra("info", "发送报表成功！");
+		startActivity(intent);
+	}
+
+	private void netSend() {
+		SendBean sendBean = new SendBean();
+		sendBean.setPhone(UserSession.getMyPhone(getApplicationContext()));
+		sendBean.setRecivephone(UserSession
+				.getSendReportPhoneNo(getApplicationContext()));
+		sendBean.setComdate(System.currentTimeMillis() + "");
+		sendBean.setContents(adapter.getNetSendInfo());
+		if (TextUtils.isEmpty(UserSession.getMyPhone(getApplicationContext()))) {
+			showSetMyPhoneDlg();
+		} else {
+			sendInternet(JsonUtil.objectToJson(sendBean), this);
+		}
 	}
 
 }

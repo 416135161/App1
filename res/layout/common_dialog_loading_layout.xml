@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="160dp"
-    android:layout_height="160dp"
+    android:layout_width="260dp"
+    android:layout_height="260dp"
     android:gravity="center"
     android:orientation="vertical" >
 
@@ -13,10 +13,11 @@
         android:id="@+id/detail_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:text="正在加载,请稍候"
+        android:text="正在发送,请稍候"
         android:textColor="#ffffff"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
 </LinearLayout>

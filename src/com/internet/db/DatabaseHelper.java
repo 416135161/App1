@@ -1,12 +1,14 @@
 package com.internet.db;
 
+import com.internet.tools.NormalUtil;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-	private static final int VERSION = 2;
+	private static final int VERSION = 3;
 	// 本地数据库的名字
 	public static final String DATA_NAME = "sms_data.db";// 聊天记录信息表
 	// 巡检项表
@@ -20,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public DatabaseHelper(Context context) {
-		this(context, DATA_NAME, VERSION);
+		this(context, NormalUtil.getRootDir() + DATA_NAME, VERSION);
 	}
 
 	public DatabaseHelper(Context context, String name, int version) {
@@ -33,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String sqlStr1 = "create table "
 				+ TABLE_SMS
 				+ "(id text primary key not null, body text, date text,"
-				+ " phoneNo text, photoPath text, tag text)";
+				+ " phoneNo text, photoPath text, tag text, info text, photo text )";
 		db.execSQL(sqlStr1);
 
 	}
@@ -41,5 +43,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		System.out.println("DatabaseHelper onUpgrade");
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SMS);
+		onCreate(db);
+
 	}
 }

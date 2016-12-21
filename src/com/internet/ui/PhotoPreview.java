@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.internet.db.DBTool;
+import com.internet.db.MessageItem;
 import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.MyGallery;
 import com.internet.myui.PhotoViewAdapter;
@@ -35,7 +37,7 @@ public class PhotoPreview extends Activity implements OnClickListener {
 	private int height2 = 0;
 	private int countDraw = 0;
 	private String path = null;
-	private List<String> list = null;
+	private List<MessageItem> list = null;
 
 	private ImageView leftButton = null;
 	private ImageView rightButton = null;
@@ -117,7 +119,6 @@ public class PhotoPreview extends Activity implements OnClickListener {
 		cancleButton.setText(list.size() + "");
 
 	}
-	
 
 	private void setGallerySelection(int pos) {
 		if (list.size() > 0) {
@@ -147,9 +148,8 @@ public class PhotoPreview extends Activity implements OnClickListener {
 	private void setGalleyAdapter() {
 
 		DisplayMetrics dm = NormalUtil.getDM(this);
-		list = GetSDImage.getImgPathList(path);
-
-		if (list.size() == 0) {
+		list = DBTool.getInstance().getSavedMessage(this);
+		if (list == null || list.size() == 0) {
 			// deleteButton.setEnabled(false);
 			finish();
 		} else if (list.size() == 1) {
@@ -190,8 +190,10 @@ public class PhotoPreview extends Activity implements OnClickListener {
 					rightButton.setEnabled(true);
 				}
 			}
-			String photoPath = list.get(position);
-			name.setText(photoPath.substring(photoPath.lastIndexOf("/") + 1));
+			String photoPath = list.get(position).getPhotoPath();
+			String info = list.get(position).getInfo();
+			name.setText(photoPath.substring(photoPath.lastIndexOf("/") + 1)
+					+ "\n" + info);
 		}
 
 		@Override
@@ -233,13 +235,6 @@ public class PhotoPreview extends Activity implements OnClickListener {
 				return;
 			}
 			int pos = gallery.getSelectedItemPosition();
-			boolean delSuc = FileUtil.deleteFile(list.get(pos));
-			if (delSuc) {
-				setGalleyAdapter();
-				setGallerySelection(pos);
-				NormalUtil.displayMessage(getApplicationContext(), "删除成功！");
-			}
-
 			break;
 		}
 	}
