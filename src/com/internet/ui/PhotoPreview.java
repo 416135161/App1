@@ -46,7 +46,7 @@ public class PhotoPreview extends Activity implements OnClickListener {
 	private MyGallery gallery = null;
 	private RelativeLayout bottom = null;
 	private PhotoViewAdapter galleryAdapter = null;
-	private TextView name;
+	private TextView name, mInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class PhotoPreview extends Activity implements OnClickListener {
 		setContentView(R.layout.photoview);
 		setTopBar();
 		name = (TextView) findViewById(R.id.name);
+		mInfo =  (TextView) findViewById(R.id.info);
 		leftButton = (ImageView) findViewById(R.id.photoview_leftbtn);
 		rightButton = (ImageView) findViewById(R.id.photoview_rightbtn);
 		deleteButton = (ImageView) findViewById(R.id.photoview_delete);
@@ -193,7 +194,8 @@ public class PhotoPreview extends Activity implements OnClickListener {
 			String photoPath = list.get(position).getPhotoPath();
 			String info = list.get(position).getInfo();
 			name.setText(photoPath.substring(photoPath.lastIndexOf("/") + 1)
-					+ "\n" + info);
+					);
+			mInfo.setText(info);
 		}
 
 		@Override
