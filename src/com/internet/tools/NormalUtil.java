@@ -24,7 +24,7 @@ public class NormalUtil {
 	public static String getRootDir() {
 		if (isHasSdcard()) {
 			return Environment.getExternalStorageDirectory().getAbsolutePath()
-					+ "/AAA/";
+					+ "/YLTbak/";
 		} else {
 			return Environment.getDataDirectory().getAbsolutePath() + "/";
 		}

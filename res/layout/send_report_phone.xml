@@ -12,7 +12,8 @@
         android:padding="5dp"
         android:text="汇报手机号码"
         android:textColor="@color/black_color"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -29,6 +30,8 @@
             android:maxLength="11"
             android:paddingLeft="5dp"
             android:phoneNumber="true"
+            android:textColor="@color/black_color"
+            android:textColorHint="@color/hui_color"
             android:textSize="16sp" />
 
         <ImageView
@@ -47,6 +50,8 @@
             android:maxLength="11"
             android:paddingLeft="5dp"
             android:phoneNumber="true"
+            android:textColor="@color/black_color"
+            android:textColorHint="@color/hui_color"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -68,6 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="取消"
+            android:textColor="@color/black_color"
             android:textSize="18sp" />
 
         <View
@@ -80,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="确定"
+            android:textColor="@color/black_color"
             android:textSize="18sp" />
     </LinearLayout>
     <!-- android:background="@drawable/login_btn" -->

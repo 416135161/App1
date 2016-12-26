@@ -564,7 +564,7 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 				}
 			});
 			text1.setText(UserSession.getPhoneNo(getApplicationContext()));
-			dialog = new AlertDialog.Builder(AlterSetting.this).setView(view)
+			dialog = new AlertDialog.Builder(AlterSetting.this).setTitle("汇报手机号码").setView(view)
 					.create();
 			dialog.setCanceledOnTouchOutside(false);
 			dialog.show();

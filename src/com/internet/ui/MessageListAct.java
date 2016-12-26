@@ -222,7 +222,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 				for (int j = 0; j < ccc; j++) {
 					MessageItem item = items.get(i * length + j);
 					if (item.getTag() != "")
-						temp += (item.getDate() + "  " + item.getTag() + "*");
+						temp += (item.getDate() + " " + item.getTag() + "*");
 					else
 						temp += (item.getDate() + "*");
 				}

@@ -8,13 +8,6 @@
     <include layout="@layout/title" />
 
     <TextView
-        android:id="@+id/name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:textColor="@color/black_color"
-        android:textSize="14sp" />
-    <TextView
         android:id="@+id/info"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -39,11 +32,20 @@
             android:paddingLeft="@dimen/photoview_paddinghor"
             android:paddingRight="@dimen/photoview_paddinghor" >
 
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="5dp"
+                android:textColor="@color/black_color"
+                android:textSize="14sp" />
+
             <Button
                 android:id="@+id/photoview_cancelbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
                 android:background="@android:color/transparent"
                 android:text="0"
                 android:textColor="@color/green_color"

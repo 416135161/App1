@@ -55,7 +55,7 @@ public class PhotoPreview extends Activity implements OnClickListener {
 		setContentView(R.layout.photoview);
 		setTopBar();
 		name = (TextView) findViewById(R.id.name);
-		mInfo =  (TextView) findViewById(R.id.info);
+		mInfo = (TextView) findViewById(R.id.info);
 		leftButton = (ImageView) findViewById(R.id.photoview_leftbtn);
 		rightButton = (ImageView) findViewById(R.id.photoview_rightbtn);
 		deleteButton = (ImageView) findViewById(R.id.photoview_delete);
@@ -193,8 +193,8 @@ public class PhotoPreview extends Activity implements OnClickListener {
 			}
 			String photoPath = list.get(position).getPhotoPath();
 			String info = list.get(position).getInfo();
-			name.setText(photoPath.substring(photoPath.lastIndexOf("/") + 1)
-					);
+			name.setText(photoPath.substring(photoPath.lastIndexOf("/") + 1,
+					photoPath.lastIndexOf(".")));
 			mInfo.setText(info);
 		}
 
