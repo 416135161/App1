@@ -12,7 +12,9 @@
         android:padding="5dp"
         android:text="删除提示"
         android:textColor="@color/black_color"
-        android:textSize="20sp" />
+        android:textSize="20sp" 
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/text_tip"
