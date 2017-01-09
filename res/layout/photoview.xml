@@ -11,7 +11,8 @@
         android:id="@+id/info"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
+        android:paddingLeft="15dp"
+        android:paddingTop= "5dp"
         android:textColor="@color/red_color"
         android:textSize="14sp" />
 
@@ -29,19 +30,18 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/photoview_bottom_marginbottom"
             android:layout_marginTop="@dimen/photoview_bottom_margintop"
-            android:paddingLeft="@dimen/photoview_paddinghor"
-            android:paddingRight="@dimen/photoview_paddinghor" >
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" >
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:padding="5dp"
                 android:textColor="@color/black_color"
                 android:textSize="14sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/photoview_cancelbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

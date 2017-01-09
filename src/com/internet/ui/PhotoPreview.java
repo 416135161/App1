@@ -42,7 +42,7 @@ public class PhotoPreview extends Activity implements OnClickListener {
 	private ImageView leftButton = null;
 	private ImageView rightButton = null;
 	private ImageView deleteButton = null;
-	private Button cancleButton = null;
+	private TextView cancleButton = null;
 	private MyGallery gallery = null;
 	private RelativeLayout bottom = null;
 	private PhotoViewAdapter galleryAdapter = null;
@@ -59,7 +59,7 @@ public class PhotoPreview extends Activity implements OnClickListener {
 		leftButton = (ImageView) findViewById(R.id.photoview_leftbtn);
 		rightButton = (ImageView) findViewById(R.id.photoview_rightbtn);
 		deleteButton = (ImageView) findViewById(R.id.photoview_delete);
-		cancleButton = (Button) findViewById(R.id.photoview_cancelbtn);
+		cancleButton = (TextView) findViewById(R.id.photoview_cancelbtn);
 		gallery = (MyGallery) findViewById(R.id.photoview_gallery);
 		bottom = (RelativeLayout) findViewById(R.id.photoview_bottom);
 

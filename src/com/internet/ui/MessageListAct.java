@@ -415,28 +415,36 @@ public class MessageListAct extends Activity implements OnClickListener {
 			waitDialog.dismiss();
 	}
 
+	AlertDialog sendDialog;
 	private void showSendDialog() {
-		new AlertDialog.Builder(this)
+		
+		View view = getLayoutInflater().inflate(R.layout.dlg_send_select, null);
+		final Button button = (Button) view.findViewById(R.id.button);
+		final Button btnCancle = (Button) view
+				.findViewById(R.id.button_cancle);
+		view.findViewById(R.id.text_tip).setVisibility(View.VISIBLE);
+
+		btnCancle.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				netSend();
+				sendDialog.dismiss();
+			}
+		});
+		button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				DBTool.getInstance().deleteAll(MessageListAct.this);
+				
+				messageSend();
+				sendDialog.dismiss();
+			}
+		});
+		sendDialog = new AlertDialog.Builder(this)
 				.setTitle("请选择发送方式")
-				.setNegativeButton("短信发送",
-						new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								messageSend();
-							}
-						})
-				.setPositiveButton("网络发送",
-						new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								netSend();
-							}
-						}).create().show();
-
+				.setView(view).create();
+		sendDialog.show();
 	}
 
 	private void messageSend() {
