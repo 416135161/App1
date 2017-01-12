@@ -419,24 +419,22 @@ public class MessageListAct extends Activity implements OnClickListener {
 	private void showSendDialog() {
 		
 		View view = getLayoutInflater().inflate(R.layout.dlg_send_select, null);
-		final Button button = (Button) view.findViewById(R.id.button);
-		final Button btnCancle = (Button) view
-				.findViewById(R.id.button_cancle);
+		Button button1 = (Button) view.findViewById(R.id.button1);
+		Button button2 = (Button) view
+				.findViewById(R.id.button2);
 		view.findViewById(R.id.text_tip).setVisibility(View.VISIBLE);
 
-		btnCancle.setOnClickListener(new OnClickListener() {
+		button1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				netSend();
 				sendDialog.dismiss();
 			}
 		});
-		button.setOnClickListener(new OnClickListener() {
+		button2.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				DBTool.getInstance().deleteAll(MessageListAct.this);
-				
 				messageSend();
 				sendDialog.dismiss();
 			}
