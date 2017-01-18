@@ -159,7 +159,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 					deleteDialog.dismiss();
 				}
 			});
-			deleteDialog = new AlertDialog.Builder(this).setTitle("删除提示").setView(view).create();
+			deleteDialog = new AlertDialog.Builder(this).setTitle("删除提示")
+					.setView(view).create();
 			deleteDialog.setCanceledOnTouchOutside(true);
 			deleteDialog.show();
 			break;
@@ -265,7 +266,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			holder.text1.setText((position + 1) + "");
+			holder.text1.setText((getCount() - position) + "");
 			holder.text2.setText(item.getDate());
 			holder.text3.setText(item.getTag());
 			return convertView;
@@ -416,12 +417,12 @@ public class MessageListAct extends Activity implements OnClickListener {
 	}
 
 	AlertDialog sendDialog;
+
 	private void showSendDialog() {
-		
+
 		View view = getLayoutInflater().inflate(R.layout.dlg_send_select, null);
 		Button button1 = (Button) view.findViewById(R.id.button1);
-		Button button2 = (Button) view
-				.findViewById(R.id.button2);
+		Button button2 = (Button) view.findViewById(R.id.button2);
 		view.findViewById(R.id.text_tip).setVisibility(View.VISIBLE);
 
 		button1.setOnClickListener(new OnClickListener() {
@@ -439,8 +440,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 				sendDialog.dismiss();
 			}
 		});
-		sendDialog = new AlertDialog.Builder(this)
-				.setTitle("请选择发送方式")
+		sendDialog = new AlertDialog.Builder(this).setTitle("请选择发送方式")
 				.setView(view).create();
 		sendDialog.show();
 	}
