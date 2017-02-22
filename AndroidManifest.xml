@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.internet.netget"
+    package="com.internet.netget"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <!--
     package="com.internet.netget"
-    package="com.internet.netget.all"
+    package="com.internet.netget.all"
     -->
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="10" />
     <!--
     android:icon="@drawable/eposton_72" 
-    android:icon="@drawable/app1_logo"
+    android:icon="@drawable/app1_logo"
     -->
     <application
         android:icon="@drawable/app1_logo"
@@ -24,7 +24,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
-            
         </activity>
         <activity
             android:name="com.internet.ui.LogoAct"
@@ -37,7 +36,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
-           <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -106,6 +105,16 @@
                 <action android:name="android.intent.action.APP_SETUP" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="kY3OHG2RogAfqHwbM47AmeIc" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

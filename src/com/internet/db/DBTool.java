@@ -51,6 +51,7 @@ public class DBTool {
 						.getColumnIndex("photoPath")));
 				message.setTag(cursor.getString(cursor.getColumnIndex("tag")));
 				message.setInfo(cursor.getString(cursor.getColumnIndex("info")));
+				message.setPhoto(cursor.getString(cursor.getColumnIndex("photo")));
 				list.add(message);
 
 			}

@@ -34,6 +34,7 @@ import com.internet.db.DBTool;
 import com.internet.db.MessageItem;
 import com.internet.entity.SendBean;
 import com.internet.entity.SendBean.ContentItem;
+import com.internet.entity.SendBean.ImgItem;
 import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
@@ -200,6 +201,19 @@ public class MessageListAct extends Activity implements OnClickListener {
 				ContentItem item = new ContentItem();
 				item.setDate(messageItem.getDate());
 				item.setTag(messageItem.getTag());
+				item.setImgPath(messageItem.getPhotoPath());
+				item.setInfo(messageItem.getInfo());
+				contents.add(item);
+			}
+			return contents;
+		}
+
+		public ArrayList<ImgItem> getNetImg() {
+			ArrayList<ImgItem> contents = new ArrayList<ImgItem>();
+			for (MessageItem messageItem : items) {
+				ImgItem item = new ImgItem();
+				item.setImgPath(messageItem.getPhotoPath());
+				item.setImg(messageItem.getPhoto());
 				contents.add(item);
 			}
 			return contents;
@@ -312,9 +326,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 					@Override
 					public void onResponse(String response) {
 						Log.d("TAG", response);
-						closeWaitDialog();
-						NormalUtil.displayMessage(getApplicationContext(),
-								"发送数据成功");
+						dealImg();
 					}
 				}, new Response.ErrorListener() {
 					@Override
@@ -331,6 +343,61 @@ public class MessageListAct extends Activity implements OnClickListener {
 				// 在这里设置需要post的参数
 				Map<String, String> map = new HashMap<String, String>();
 				map.put("data", sendData);
+				return map;
+			}
+		};
+
+		HttpUtil.getInstance().addRequest(stringRequest, context);
+	}
+
+	private ArrayList<ImgItem> sendImgs;
+	private int index = 0;
+
+	private void dealImg() {
+		if (sendImgs == null) {
+			sendImgs = adapter.getNetImg();
+		}
+		if (sendImgs != null && sendImgs.size() > 0) {
+			if (index < sendImgs.size()) {
+				uploadImg(sendImgs.get(index), this);
+			} else {
+				closeWaitDialog();
+				NormalUtil.displayMessage(getApplicationContext(), "发送数据成功");
+			}
+		} else {
+			closeWaitDialog();
+			NormalUtil.displayMessage(getApplicationContext(), "发送数据成功");
+		}
+
+	}
+
+	private void uploadImg(final ImgItem sendData, Context context) {
+		System.out.println(sendData);
+		StringRequest stringRequest = new StringRequest(Request.Method.POST,
+				HttpUtil.SERVER_ADDRESS + "app/comment/updateImg.do",
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						Log.d("TAG", response);
+						index++;
+						dealImg();
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+						Log.e("TAG", error.getMessage(), error);
+						closeWaitDialog();
+						NormalUtil.displayMessage(getApplicationContext(),
+								"发送数据失败，请检查网络");
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() {
+				// 在这里设置需要post的参数
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("img", sendData.getImg());
+				map.put("imgPath", sendData.getImgPath());
 				return map;
 			}
 		};
@@ -467,6 +534,9 @@ public class MessageListAct extends Activity implements OnClickListener {
 				.getSendReportPhoneNo(getApplicationContext()));
 		sendBean.setComdate(System.currentTimeMillis() + "");
 		sendBean.setContents(adapter.getNetSendInfo());
+		
+		sendImgs = null;
+		index = 0;
 		if (TextUtils.isEmpty(UserSession.getMyPhone(getApplicationContext()))) {
 			showSetMyPhoneDlg();
 		} else {

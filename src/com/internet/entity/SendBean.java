@@ -48,6 +48,8 @@ public class SendBean {
 	public static class ContentItem {
 		private String date;
 		private String tag;
+		private String imgPath;
+		private String info;
 
 		public String getDate() {
 			return date;
@@ -65,6 +67,42 @@ public class SendBean {
 			this.tag = tag;
 		}
 
+		public String getImgPath() {
+			return imgPath;
+		}
+
+		public void setImgPath(String imgPath) {
+			this.imgPath = imgPath;
+		}
+
+		public String getInfo() {
+			return info;
+		}
+
+		public void setInfo(String info) {
+			this.info = info;
+		}
+		
+	}
+	
+	public static class ImgItem{
+		private String imgPath;
+		private String img;
+		public String getImgPath() {
+			return imgPath;
+		}
+		public void setImgPath(String imgPath) {
+			this.imgPath = imgPath;
+		}
+		public String getImg() {
+			return img;
+		}
+		public void setImg(String img) {
+			this.img = img;
+		}
+		
+		
+		
 	}
 
 }

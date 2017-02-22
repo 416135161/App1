@@ -38,6 +38,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
@@ -49,6 +51,7 @@ import com.google.zxing.client.android.camera.CameraManager;
 import com.internet.db.BrcodeMessage;
 import com.internet.db.DBTool;
 import com.internet.db.MessageItem;
+import com.internet.intrface.MyLocationListener;
 import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
@@ -375,7 +378,16 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 			DBTool.getInstance().deleteAll(this);
 		}
 
+		mLocationClient = new LocationClient(getApplicationContext());
+		// 声明LocationClient类
+		mLocationClient.registerLocationListener(myListener);
+		// 注册监听函数
+		myListener.initLocation(mLocationClient);
+
 	}
+
+	public LocationClient mLocationClient = null;
+	public MyLocationListener myListener = new MyLocationListener();
 
 	/**
 	 * 二维码处理成功
@@ -428,6 +440,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		// 初始化扫描界面
 		super.onResume();
 		resumeEvent();
+		mLocationClient.start();
 	}
 
 	public void resumeEvent() {
@@ -466,7 +479,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 	protected void onPause() {
 		super.onPause();
 		pauseEvent();
-		// finish();
+		mLocationClient.stop();
 	}
 
 	public void pauseEvent() {
@@ -746,7 +759,9 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		Date date = new java.util.Date();
 		String dateTime = new SimpleDateFormat("MM-dd-HH-mm-ss").format(date);
 		String imgName = dateTime + ".jpg";
-		String imgPath = NormalUtil.getRootDir() + imgName;
+		String imgPath =
+		// NormalUtil.getRootDir() +
+		imgName;
 		MessageItem item = new MessageItem();
 		item.setPhotoPath(imgPath);
 		item.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
