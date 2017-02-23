@@ -203,6 +203,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 				item.setTag(messageItem.getTag());
 				item.setImgPath(messageItem.getPhotoPath());
 				item.setInfo(messageItem.getInfo());
+				item.setLocation(messageItem.getLocation());
 				contents.add(item);
 			}
 			return contents;

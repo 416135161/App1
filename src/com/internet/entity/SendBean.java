@@ -50,6 +50,7 @@ public class SendBean {
 		private String tag;
 		private String imgPath;
 		private String info;
+		private String location;
 
 		public String getDate() {
 			return date;
@@ -82,6 +83,16 @@ public class SendBean {
 		public void setInfo(String info) {
 			this.info = info;
 		}
+
+		public String getLocation() {
+			return location;
+		}
+
+		public void setLocation(String location) {
+			this.location = location;
+		}
+		
+		
 		
 	}
 	

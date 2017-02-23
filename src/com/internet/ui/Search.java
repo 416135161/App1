@@ -768,6 +768,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		item.setId(date.getTime());
 		item.setTag(tag);
 		item.setInfo(info);
+		item.setLocation(myListener.getmLocation());
 		bitmap = ImageUtil.setBitmapRotate(90, bitmap);
 		item.setPhoto(NormalUtil.bitmapToBase64(bitmap));
 		DBTool.getInstance().saveMessage(getApplicationContext(), item);
