@@ -1,5 +1,6 @@
 package com.internet.ui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +39,7 @@ import com.internet.entity.SendBean.ImgItem;
 import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
+import com.internet.tools.FileUtil;
 import com.internet.tools.HttpUtil;
 import com.internet.tools.JsonUtil;
 import com.internet.tools.MessageSender;
@@ -121,11 +123,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		case R.id.btn_1:
-			List<MessageItem> items = new ArrayList<MessageItem>();
-			items.add(mItems.get(0));
-			adapter.setData(items);
-			adapter.notifyDataSetChanged();
+		case R.id.btn_1:		
+			setDataByToday();
 			break;
 		case R.id.btn_2:
 			setDataByDay(7);
@@ -183,6 +182,19 @@ public class MessageListAct extends Activity implements OnClickListener {
 		}
 		adapter.setData(mSubItems);
 		adapter.notifyDataSetChanged();
+	}
+	
+	private void setDataByToday(){
+		List<MessageItem> mSubItems = new ArrayList<MessageItem>();
+		for (int i = 0; i < mItems.size(); i++) {
+			MessageItem item = mItems.get(i);
+			if (NormalUtil.IsToday(item.getDate())) {
+				mSubItems.add(item);
+			}
+		}
+		adapter.setData(mSubItems);
+		adapter.notifyDataSetChanged();
+		
 	}
 
 	class MyAdapter extends BaseAdapter {
@@ -373,7 +385,14 @@ public class MessageListAct extends Activity implements OnClickListener {
 	}
 
 	private void uploadImg(final ImgItem sendData, Context context) {
-		System.out.println(sendData);
+		System.out.println(sendData.getImg());
+//		try {
+//			FileUtil.writeStringToFile(NormalUtil.getRootDir() +
+//					"222.txt", sendData.getImg());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,
 				HttpUtil.SERVER_ADDRESS + "app/comment/updateImg.do",
 				new Response.Listener<String>() {
@@ -535,7 +554,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 				.getSendReportPhoneNo(getApplicationContext()));
 		sendBean.setComdate(System.currentTimeMillis() + "");
 		sendBean.setContents(adapter.getNetSendInfo());
-		
+
 		sendImgs = null;
 		index = 0;
 		if (TextUtils.isEmpty(UserSession.getMyPhone(getApplicationContext()))) {

@@ -335,5 +335,19 @@ public class FileUtil {
             }
         }
     }
+    
+    public static void writeStringToFile(String path, String content) throws IOException{
+    	  File file = null;
+          OutputStream output = null;
+   
+          file = createAbsFile(path);
+          output = new FileOutputStream(file);
+       
+          output.write(content.getBytes());
+          output.flush();
+          output.close();
+          System.out.println("文件大小为：" + file.length());
+      
+    }
 
 }

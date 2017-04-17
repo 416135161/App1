@@ -16,8 +16,8 @@ import com.android.volley.toolbox.Volley;
 
 public class HttpUtil {
 
-//	public static final String SERVER_ADDRESS = "http://125.67.237.234:8081/";
-	public static final String SERVER_ADDRESS = "http://192.168.90.198:8080/";
+	public static final String SERVER_ADDRESS = "http://125.67.237.234:8081/";
+//	public static final String SERVER_ADDRESS = "http://192.168.90.198:8080/";
 
 	RequestQueue mQueue;
 
