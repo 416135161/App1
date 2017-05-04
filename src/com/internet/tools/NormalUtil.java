@@ -179,6 +179,71 @@ public class NormalUtil {
 		return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 	}
 
+	public static boolean isSameMonthWithToday(String day) {
+
+		Calendar cal = Calendar.getInstance();
+		Date date = null;
+		try {
+			date = getDateFormat().parse(day);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cal.setTime(date);
+
+		// 0.先把Date类型的对象转换Calendar类型的对象
+		Calendar todayCal = Calendar.getInstance();
+		todayCal.setTime(new Date());
+
+		// 1.比较当前日期在年份中的周数是否相同
+		if (todayCal.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
+			if (todayCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * <pre>
+	 * 判断date和当前日期是否在同一周内 
+	 * 注: 
+	 * Calendar类提供了一个获取日期在所属年份中是第几周的方法，对于上一年末的某一天 
+	 * 和新年初的某一天在同一周内也一样可以处理，例如2012-12-31和2013-01-01虽然在 
+	 * 不同的年份中，但是使用此方法依然判断二者属于同一周内
+	 * </pre>
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static boolean isSameWeekWithToday(String day) {
+
+		Calendar cal = Calendar.getInstance();
+		Date date = null;
+		try {
+			date = getDateFormat().parse(day);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cal.setTime(date);
+
+		// 0.先把Date类型的对象转换Calendar类型的对象
+		Calendar todayCal = Calendar.getInstance();
+		todayCal.setTime(new Date());
+
+		// 1.比较当前日期在年份中的周数是否相同
+		if (todayCal.get(Calendar.WEEK_OF_YEAR) == cal
+				.get(Calendar.WEEK_OF_YEAR)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	/**
 	 * 判断是否为今天(效率比较高)
 	 * 

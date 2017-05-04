@@ -87,7 +87,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="0dp"
-                    android:text="一周"
+                    android:text="本周"
                     android:textColor="@color/black_color"
                     android:textSize="14sp"
                     />
@@ -98,7 +98,7 @@
                     android:layout_height="35dp"
                     android:layout_weight="1"
                     android:padding="0dp"
-                    android:text="一月"
+                    android:text="本月"
                     android:textColor="@color/black_color"
                     android:textSize="14sp"
                      />

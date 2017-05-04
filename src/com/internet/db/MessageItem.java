@@ -18,6 +18,8 @@ public class MessageItem implements java.io.Serializable
 	private String info; //扫描到的内容
 	
 	private String location;
+	
+	private String isImgUp;
 
 	public MessageItem() {
 	}
@@ -94,6 +96,14 @@ public class MessageItem implements java.io.Serializable
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getIsImgUp() {
+		return isImgUp;
+	}
+
+	public void setIsImgUp(String isImgUp) {
+		this.isImgUp = isImgUp;
 	}
 	
 }

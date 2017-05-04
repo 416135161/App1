@@ -1,6 +1,5 @@
 package com.internet.ui;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +9,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,7 +37,6 @@ import com.internet.entity.SendBean.ImgItem;
 import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
-import com.internet.tools.FileUtil;
 import com.internet.tools.HttpUtil;
 import com.internet.tools.JsonUtil;
 import com.internet.tools.MessageSender;
@@ -123,14 +120,14 @@ public class MessageListAct extends Activity implements OnClickListener {
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		case R.id.btn_1:		
+		case R.id.btn_1:
 			setDataByToday();
 			break;
 		case R.id.btn_2:
-			setDataByDay(7);
+			setDataByWeek();
 			break;
 		case R.id.btn_3:
-			setDataByDay(30);
+			setDataByMonth();
 			break;
 		case R.id.btn_4:
 			adapter.setData(mItems);
@@ -183,8 +180,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 		adapter.setData(mSubItems);
 		adapter.notifyDataSetChanged();
 	}
-	
-	private void setDataByToday(){
+
+	private void setDataByToday() {
 		List<MessageItem> mSubItems = new ArrayList<MessageItem>();
 		for (int i = 0; i < mItems.size(); i++) {
 			MessageItem item = mItems.get(i);
@@ -194,7 +191,33 @@ public class MessageListAct extends Activity implements OnClickListener {
 		}
 		adapter.setData(mSubItems);
 		adapter.notifyDataSetChanged();
-		
+
+	}
+
+	private void setDataByWeek() {
+		List<MessageItem> mSubItems = new ArrayList<MessageItem>();
+		for (int i = 0; i < mItems.size(); i++) {
+			MessageItem item = mItems.get(i);
+			if (NormalUtil.isSameWeekWithToday(item.getDate())) {
+				mSubItems.add(item);
+			}
+		}
+		adapter.setData(mSubItems);
+		adapter.notifyDataSetChanged();
+
+	}
+
+	private void setDataByMonth() {
+		List<MessageItem> mSubItems = new ArrayList<MessageItem>();
+		for (int i = 0; i < mItems.size(); i++) {
+			MessageItem item = mItems.get(i);
+			if (NormalUtil.isSameMonthWithToday(item.getDate())) {
+				mSubItems.add(item);
+			}
+		}
+		adapter.setData(mSubItems);
+		adapter.notifyDataSetChanged();
+
 	}
 
 	class MyAdapter extends BaseAdapter {
@@ -224,10 +247,13 @@ public class MessageListAct extends Activity implements OnClickListener {
 		public ArrayList<ImgItem> getNetImg() {
 			ArrayList<ImgItem> contents = new ArrayList<ImgItem>();
 			for (MessageItem messageItem : items) {
-				ImgItem item = new ImgItem();
-				item.setImgPath(messageItem.getPhotoPath());
-				item.setImg(messageItem.getPhoto());
-				contents.add(item);
+				if (messageItem.getIsImgUp() == "0") {
+					ImgItem item = new ImgItem();
+					item.setImgPath(messageItem.getPhotoPath());
+					item.setImg(messageItem.getPhoto());
+					item.setId(messageItem.getId());
+					contents.add(item);
+				}
 			}
 			return contents;
 		}
@@ -386,13 +412,13 @@ public class MessageListAct extends Activity implements OnClickListener {
 
 	private void uploadImg(final ImgItem sendData, Context context) {
 		System.out.println(sendData.getImg());
-//		try {
-//			FileUtil.writeStringToFile(NormalUtil.getRootDir() +
-//					"222.txt", sendData.getImg());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// try {
+		// FileUtil.writeStringToFile(NormalUtil.getRootDir() +
+		// "222.txt", sendData.getImg());
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,
 				HttpUtil.SERVER_ADDRESS + "app/comment/updateImg.do",
 				new Response.Listener<String>() {
@@ -401,6 +427,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 						Log.d("TAG", response);
 						index++;
 						dealImg();
+						DBTool.getInstance().updatePhotoState(
+								getApplicationContext(), sendData.getId());
 					}
 				}, new Response.ErrorListener() {
 					@Override

@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
@@ -56,6 +57,7 @@ import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
 import com.internet.service.WatchService;
+import com.internet.tools.FileUtil;
 import com.internet.tools.GetSDImage;
 import com.internet.tools.ImageUtil;
 import com.internet.tools.MessageSender;
@@ -759,9 +761,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		Date date = new java.util.Date();
 		String dateTime = new SimpleDateFormat("MM-dd-HH-mm-ss").format(date);
 		String imgName = dateTime + ".jpg";
-		String imgPath =
-		// NormalUtil.getRootDir() +
-		imgName;
+		String imgPath = NormalUtil.getRootDir() + imgName;
 		MessageItem item = new MessageItem();
 		item.setPhotoPath(imgPath);
 		item.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
@@ -770,6 +770,16 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		item.setInfo(info);
 		item.setLocation(myListener.getmLocation());
 		bitmap = ImageUtil.setBitmapRotate(90, bitmap);
+		
+		ImageUtil.saveBitmapToSDcard(imgPath, bitmap, 70);
+		bitmap = ImageUtil.getImageBitmapByPath(this, imgPath); 
+		try {
+			FileUtil.del(imgPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		item.setPhoto(NormalUtil.bitmapToBase64(bitmap));
 		DBTool.getInstance().saveMessage(getApplicationContext(), item);
 	}

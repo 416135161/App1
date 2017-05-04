@@ -99,6 +99,7 @@ public class SendBean {
 	public static class ImgItem{
 		private String imgPath;
 		private String img;
+		private long id;
 		public String getImgPath() {
 			return imgPath;
 		}
@@ -111,7 +112,12 @@ public class SendBean {
 		public void setImg(String img) {
 			this.img = img;
 		}
-		
+		public long getId() {
+			return id;
+		}
+		public void setId(long id) {
+			this.id = id;
+		}
 		
 		
 	}

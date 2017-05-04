@@ -51,8 +51,12 @@ public class DBTool {
 						.getColumnIndex("photoPath")));
 				message.setTag(cursor.getString(cursor.getColumnIndex("tag")));
 				message.setInfo(cursor.getString(cursor.getColumnIndex("info")));
-				message.setPhoto(cursor.getString(cursor.getColumnIndex("photo")));
-				message.setLocation(cursor.getString(cursor.getColumnIndex("location")));
+				message.setPhoto(cursor.getString(cursor
+						.getColumnIndex("photo")));
+				message.setLocation(cursor.getString(cursor
+						.getColumnIndex("location")));
+				message.setIsImgUp(cursor.getString(cursor
+						.getColumnIndex("isImgUp")));
 				list.add(message);
 
 			}
@@ -94,6 +98,23 @@ public class DBTool {
 		return photo;
 	}
 
+	public void updatePhotoState(Context context, long id) {
+		SQLiteDatabase db = new DatabaseHelper(context).getWritableDatabase();
+		try {
+			ContentValues contentValues = new ContentValues();
+			contentValues.clear();
+			contentValues.put("isImgUp", "1");
+			db.update("table_sms", contentValues, "id= ?", new String[] { id
+					+ "" });
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (db != null && db.isOpen()) {
+				db.close();
+			}
+		}
+	}
+
 	public synchronized void saveMessage(Context context, MessageItem item) {
 		if (item == null)
 			return;
@@ -111,6 +132,7 @@ public class DBTool {
 		contentValues.put("info", item.getInfo());
 		contentValues.put("photo", item.getPhoto());
 		contentValues.put("location", item.getLocation());
+		contentValues.put("isImgUp", "0");
 		db.insert(DatabaseHelper.TABLE_SMS, null, contentValues);
 		Cursor cursor = db.rawQuery("SELECT * FROM table_sms ", null);
 		int count = cursor.getCount();
