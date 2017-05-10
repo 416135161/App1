@@ -1,5 +1,6 @@
 package com.internet.ui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,7 @@ import com.internet.entity.SendBean.ImgItem;
 import com.internet.intrface.TopBarClickListener;
 import com.internet.myui.TopBar;
 import com.internet.netget.R;
+import com.internet.tools.FileUtil;
 import com.internet.tools.HttpUtil;
 import com.internet.tools.JsonUtil;
 import com.internet.tools.MessageSender;
@@ -108,7 +110,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 				// TODO Auto-generated method stub
 				mItems = DBTool.getInstance().getSavedMessage(
 						getApplicationContext());
-				System.out.println("JJJJJJJJJJJJJJJJJJ");
+				System.out.println(JsonUtil.objectToJson(mItems));
 				adapter.setData(mItems);
 				mHandler.sendEmptyMessage(0);
 			}
@@ -247,13 +249,17 @@ public class MessageListAct extends Activity implements OnClickListener {
 		public ArrayList<ImgItem> getNetImg() {
 			ArrayList<ImgItem> contents = new ArrayList<ImgItem>();
 			for (MessageItem messageItem : items) {
-				if (messageItem.getIsImgUp() == "0") {
+				if (TextUtils.equals(messageItem.getIsImgUp(), "0")) {
 					ImgItem item = new ImgItem();
 					item.setImgPath(messageItem.getPhotoPath());
 					item.setImg(messageItem.getPhoto());
 					item.setId(messageItem.getId());
 					contents.add(item);
+
+					System.out.println("WWWWWWWWWWWWWWWWWWWWWww");
 				}
+
+				System.out.println("JJJJJJJJJJJJJJJJJJJJJ");
 			}
 			return contents;
 		}
@@ -393,9 +399,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 	private int index = 0;
 
 	private void dealImg() {
-		if (sendImgs == null) {
-			sendImgs = adapter.getNetImg();
-		}
+		sendImgs = adapter.getNetImg();
 		if (sendImgs != null && sendImgs.size() > 0) {
 			if (index < sendImgs.size()) {
 				uploadImg(sendImgs.get(index), this);

@@ -763,12 +763,13 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		String imgName = dateTime + ".jpg";
 		String imgPath = NormalUtil.getRootDir() + imgName;
 		MessageItem item = new MessageItem();
-		item.setPhotoPath(imgPath);
+		item.setPhotoPath(imgName);
 		item.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 		item.setId(date.getTime());
 		item.setTag(tag);
 		item.setInfo(info);
 		item.setLocation(myListener.getmLocation());
+		item.setIsImgUp("0");
 		bitmap = ImageUtil.setBitmapRotate(90, bitmap);
 		
 		ImageUtil.saveBitmapToSDcard(imgPath, bitmap, 70);
