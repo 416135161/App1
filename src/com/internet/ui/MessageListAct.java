@@ -53,6 +53,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 	private List<MessageItem> mItems;
 	private MyAdapter adapter;
 	private Dialog deleteDialog;
+	
+	private Dialog retryDialog;
 	private Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -381,6 +383,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 						closeWaitDialog();
 						NormalUtil.displayMessage(getApplicationContext(),
 								"发送数据失败，请检查网络");
+						
+						retry();
 					}
 				}) {
 			@Override
@@ -405,10 +409,12 @@ public class MessageListAct extends Activity implements OnClickListener {
 				uploadImg(sendImgs.get(index), this);
 			} else {
 				closeWaitDialog();
+				initListView();
 				NormalUtil.displayMessage(getApplicationContext(), "发送数据成功");
 			}
 		} else {
 			closeWaitDialog();
+			initListView();
 			NormalUtil.displayMessage(getApplicationContext(), "发送数据成功");
 		}
 
@@ -442,6 +448,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 						closeWaitDialog();
 						NormalUtil.displayMessage(getApplicationContext(),
 								"发送数据失败，请检查网络");
+						
+						retry();
 					}
 				}) {
 			@Override
@@ -594,6 +602,33 @@ public class MessageListAct extends Activity implements OnClickListener {
 		} else {
 			sendInternet(JsonUtil.objectToJson(sendBean), this);
 		}
+	}
+	
+	private void retry(){
+		View view = getLayoutInflater().inflate(R.layout.retry_dlg, null);
+		final Button button = (Button) view.findViewById(R.id.button);
+		final Button btnCancle = (Button) view
+				.findViewById(R.id.button_cancle);
+		view.findViewById(R.id.text_tip).setVisibility(View.VISIBLE);
+
+		btnCancle.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				retryDialog.dismiss();
+			}
+		});
+		button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				netSend();
+				retryDialog.dismiss();
+			}
+		});
+		retryDialog = new AlertDialog.Builder(this).setTitle("删除提示")
+				.setView(view).create();
+		retryDialog.setCanceledOnTouchOutside(true);
+		retryDialog.show();
 	}
 
 }

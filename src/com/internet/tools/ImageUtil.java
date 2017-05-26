@@ -1,5 +1,7 @@
 package com.internet.tools;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -141,4 +143,19 @@ public class ImageUtil {
 		bitmap = null;
 		return newbitmap;
 	}
+	
+	/** 
+     * 质量压缩方法 
+     *  
+     * @param image 
+     * @return 
+     */  
+    public static Bitmap compressImage(Bitmap image) {  
+  
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+        image.compress(Bitmap.CompressFormat.JPEG, 20, baos);     
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());  
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);  
+        return bitmap;  
+    } 
 }

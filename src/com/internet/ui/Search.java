@@ -759,7 +759,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 
 	private void saveBitmap(Bitmap bitmap, String info) {
 		Date date = new java.util.Date();
-		String dateTime = new SimpleDateFormat("MM-dd-HH-mm-ss").format(date);
+		String dateTime = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(date);
 		String imgName = dateTime + ".jpg";
 		String imgPath = NormalUtil.getRootDir() + imgName;
 		MessageItem item = new MessageItem();
@@ -772,16 +772,16 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		item.setIsImgUp("0");
 		bitmap = ImageUtil.setBitmapRotate(90, bitmap);
 		
-		ImageUtil.saveBitmapToSDcard(imgPath, bitmap, 70);
-		bitmap = ImageUtil.getImageBitmapByPath(this, imgPath); 
-		try {
-			FileUtil.del(imgPath);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		Bitmap bitmap2 = ImageUtil.compressImage(bitmap) ; 
+//		try {
+//			FileUtil.del(imgPath);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-		item.setPhoto(NormalUtil.bitmapToBase64(bitmap));
+		item.setPhoto(NormalUtil.bitmapToBase64(bitmap2));
 		DBTool.getInstance().saveMessage(getApplicationContext(), item);
 	}
 

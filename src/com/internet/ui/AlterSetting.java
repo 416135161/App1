@@ -27,6 +27,7 @@ import com.internet.myui.TopBar;
 import com.internet.netget.R;
 import com.internet.tools.Constants;
 import com.internet.tools.NormalUtil;
+import com.internet.tools.SecretKeyTool;
 import com.internet.tools.UserSession;
 
 public class AlterSetting extends Activity implements OnCheckedChangeListener,
@@ -61,7 +62,7 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.alter_setting);
 		setTopBar();
-		
+
 		check_send_msg = (CheckBox) findViewById(R.id.check_send_msg);
 		check_send_msg.setChecked(UserSession
 				.getCheckSendMsg(getApplicationContext()));
@@ -134,8 +135,8 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 			mBtnResetNo.setVisibility(View.GONE);
 		else
 			mBtnResetNo.setVisibility(View.VISIBLE);
-		
-//		setGoneBtn();
+
+		// setGoneBtn();
 	}
 
 	private void initRadioButton(RadioGroup group, int index) {
@@ -517,6 +518,7 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 					null);
 			final EditText text1 = (EditText) view.findViewById(R.id.text1);
 			final EditText text2 = (EditText) view.findViewById(R.id.text2);
+			final EditText text3 = (EditText) view.findViewById(R.id.text3);
 			final Button button = (Button) view.findViewById(R.id.button);
 			final Button btnCancle = (Button) view
 					.findViewById(R.id.button_cancle);
@@ -536,6 +538,7 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 					// TODO Auto-generated method stub
 					String phoneNo1 = text1.getEditableText().toString();
 					String phoneNo2 = text2.getEditableText().toString();
+					String secretKey = text3.getEditableText().toString();
 					if (TextUtils.isEmpty(phoneNo1) || phoneNo1.length() != 11) {
 						NormalUtil.displayMessage(getApplicationContext(),
 								"输入的非手机号码！");
@@ -556,6 +559,14 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 						dialog.show();
 						return;
 					}
+
+					if (!SecretKeyTool.isSecretKeyIn(secretKey)) {
+						NormalUtil.displayMessage(getApplicationContext(),
+								"请输入正确的秘钥！");
+						dialog.show();
+						return;
+					}
+
 					UserSession.setSendReportPhoneNo(getApplicationContext(),
 							phoneNo1);
 					startActivity(new Intent(AlterSetting.this,
@@ -564,17 +575,17 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 				}
 			});
 			text1.setText(UserSession.getPhoneNo(getApplicationContext()));
-			dialog = new AlertDialog.Builder(AlterSetting.this).setTitle("汇报手机号码").setView(view)
-					.create();
+			dialog = new AlertDialog.Builder(AlterSetting.this)
+					.setTitle("汇报手机号码").setView(view).create();
 			dialog.setCanceledOnTouchOutside(false);
 			dialog.show();
 		} else
 			dialog.show();
 
 	}
-	
-	private void setGoneBtn(){
-		((ViewGroup)check_send_msg.getParent()).setVisibility(View.GONE);
+
+	private void setGoneBtn() {
+		((ViewGroup) check_send_msg.getParent()).setVisibility(View.GONE);
 		mBtnSendReport.setVisibility(View.GONE);
 		mBtnResetNo.setVisibility(View.GONE);
 	}

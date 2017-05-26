@@ -53,6 +53,26 @@
             android:textColor="@color/black_color"
             android:textColorHint="@color/hui_color"
             android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:background="@drawable/login_point" />
+
+        <EditText
+            android:id="@+id/text3"
+            style="@style/login_edittext_style"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dip"
+            android:hint="安装秘钥"
+            android:inputType="number"
+            android:maxLength="4"
+            android:paddingLeft="5dp"
+            android:textColor="@color/black_color"
+            android:textColorHint="@color/hui_color"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <ImageView
