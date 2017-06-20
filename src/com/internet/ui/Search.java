@@ -299,7 +299,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 				break;
 			case 3:
 				Intent intent = new Intent();
-				intent.setClass(Search.this, OkAct.class);
+				intent.setClass(Search.this, OkAndIntAct.class);
 				intent.putExtra("info", (String) msg.obj);
 				Search.this.startActivity(intent);
 				finish();

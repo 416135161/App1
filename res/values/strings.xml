@@ -34,9 +34,9 @@
        <string name="title">电子点名</string>
     
     -->
-
-       <string name="app_name">车库巡场</string>
-       <string name="title">车库巡场</string>
+         <string name="app_name">e护身符</string>
+    <string name="title">e护身符</string>
+    
        
     
     <string name="loding">加载中...</string>
