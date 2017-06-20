@@ -11,8 +11,8 @@
          <string name="app_name">平安盾甲</string>
        <string name="title">平安盾甲</string>
        
-   <string name="app_name">校园卫士</string>
-    <string name="title">校园卫士</string>
+   <string name="app_name">学子骄骄·校园卫士</string>
+    <string name="title">学子骄骄·校园卫士</string>
     
     <string name="app_name">扫码考勤</string>
     <string name="title">扫码考勤</string>
@@ -32,11 +32,14 @@
        
         <string name="app_name">电子点名</string>
        <string name="title">电子点名</string>
+       
+         <string name="app_name">e揽通·车库巡场</string>
+    <string name="title">e揽通·车库巡场</string>
     
     -->
 
-       <string name="app_name">车库巡场</string>
-       <string name="title">车库巡场</string>
+     <string name="app_name">e揽通·车库巡场</string>
+    <string name="title">e揽通·车库巡场</string>
        
     
     <string name="loding">加载中...</string>
