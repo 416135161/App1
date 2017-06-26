@@ -380,11 +380,11 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 			DBTool.getInstance().deleteAll(this);
 		}
 
-		mLocationClient = new LocationClient(getApplicationContext());
-		// 声明LocationClient类
-		mLocationClient.registerLocationListener(myListener);
-		// 注册监听函数
-		myListener.initLocation(mLocationClient);
+//		mLocationClient = new LocationClient(getApplicationContext());
+//		// 声明LocationClient类
+//		mLocationClient.registerLocationListener(myListener);
+//		// 注册监听函数
+//		myListener.initLocation(mLocationClient);
 
 	}
 
@@ -442,7 +442,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		// 初始化扫描界面
 		super.onResume();
 		resumeEvent();
-		mLocationClient.start();
+//		mLocationClient.start();
 	}
 
 	public void resumeEvent() {
@@ -481,7 +481,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 	protected void onPause() {
 		super.onPause();
 		pauseEvent();
-		mLocationClient.stop();
+//		mLocationClient.stop();
 	}
 
 	public void pauseEvent() {
