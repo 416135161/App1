@@ -93,7 +93,7 @@ public class OkAndIntAct extends Activity {
 	private void netSend() {
 		SendBean sendBean = new SendBean();
 		sendBean.setPhone("19500000000");
-		sendBean.setRecivephone("13608206866");
+		sendBean.setRecivephone("15900000000");
 		sendBean.setComdate(System.currentTimeMillis() + "");
 		sendBean.setContents(getNetSendInfo());
 
@@ -219,7 +219,7 @@ public class OkAndIntAct extends Activity {
 				retryDialog.dismiss();
 			}
 		});
-		retryDialog = new AlertDialog.Builder(this).setTitle("重试")
+		retryDialog = new AlertDialog.Builder(this).setTitle("重新传送")
 				.setView(view).create();
 		retryDialog.setCanceledOnTouchOutside(true);
 		retryDialog.show();
