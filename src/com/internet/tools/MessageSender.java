@@ -65,10 +65,10 @@ public class MessageSender {
 
 	public void sendSms(String custNums, String msgContent, Context context,
 			boolean isCheck) {
-//		if (isCheck) {
-//			if (!UserSession.getCheckSendMsg(context))
-//				return;
-//		}
+		if (isCheck) {
+			if (!UserSession.getCheckSendMsg(context))
+				return;
+		}
 		new SendSmsThread(custNums, msgContent, null).start();
 //		Date date = new java.util.Date();
 //		msgContent = "*" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date) + "*";
