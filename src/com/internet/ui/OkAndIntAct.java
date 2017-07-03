@@ -11,6 +11,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +21,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -34,12 +38,17 @@ import com.internet.netget.R;
 import com.internet.tools.HttpUtil;
 import com.internet.tools.JsonUtil;
 import com.internet.tools.NormalUtil;
+import com.internet.tools.UserSession;
 
 public class OkAndIntAct extends Activity {
 	private TextView content, text_info;
 	protected Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			netSend();
+			if (TextUtils.isEmpty(UserSession.getMyPhone(getApplicationContext()))) {
+				showSetMyPhoneDlg();
+			}else{
+				netSend();
+			}
 		};
 	};
 
@@ -92,7 +101,7 @@ public class OkAndIntAct extends Activity {
 
 	private void netSend() {
 		SendBean sendBean = new SendBean();
-		sendBean.setPhone("19500000000");
+		sendBean.setPhone(UserSession.getMyPhone(getApplicationContext()));
 		sendBean.setRecivephone("15900000000");
 		sendBean.setComdate(System.currentTimeMillis() + "");
 		sendBean.setContents(getNetSendInfo());
@@ -242,4 +251,78 @@ public class OkAndIntAct extends Activity {
 		if (waitDialog != null && waitDialog.isShowing())
 			waitDialog.dismiss();
 	}
+	
+	private Dialog dialog;
+
+	private void showSetMyPhoneDlg() {
+		if (dialog == null) {
+			View view = getLayoutInflater()
+					.inflate(R.layout.set_my_phone, null);
+			TextView title = (TextView) view.findViewById(R.id.text_title);
+			title.setText("联系号码");
+			final EditText text1 = (EditText) view.findViewById(R.id.text1);
+			final EditText text2 = (EditText) view.findViewById(R.id.text2);
+			final Button button = (Button) view.findViewById(R.id.button);
+			final Button btnCancle = (Button) view
+					.findViewById(R.id.button_cancle);
+
+			btnCancle.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			});
+			
+			text1.setHint("本次号码：195开头");
+			text2.setHint("重输上述号码");
+	
+			button.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					String phoneNo1 = text1.getEditableText().toString();
+					String phoneNo2 = text2.getEditableText().toString();
+					if (TextUtils.isEmpty(phoneNo1) || phoneNo1.length() != 11) {
+						NormalUtil.displayMessage(getApplicationContext(),
+								"输入的非手机号码！");
+						dialog.show();
+						return;
+					}
+
+					if (TextUtils.isEmpty(phoneNo2) || phoneNo2.length() != 11) {
+						NormalUtil.displayMessage(getApplicationContext(),
+								"重新输入的非手机号码！");
+						dialog.show();
+						return;
+					}
+					
+					if (!phoneNo1.startsWith("195") || !phoneNo2.startsWith("195")) {
+						NormalUtil.displayMessage(getApplicationContext(),
+								"手机号码必须以195开头！");
+						dialog.show();
+						return;
+					}
+
+					if (!TextUtils.equals(phoneNo1, phoneNo2)) {
+						NormalUtil.displayMessage(getApplicationContext(),
+								"请两次输入相同的手机号码！");
+						dialog.show();
+						return;
+					}
+					UserSession.setMyPhone(getApplicationContext(), phoneNo1);
+					dialog.dismiss();
+					netSend();
+				}
+			});
+			dialog = new AlertDialog.Builder(this).setView(view).create();
+			dialog.setCanceledOnTouchOutside(false);
+			dialog.show();
+		} else
+			dialog.show();
+
+	}
+	
 }
