@@ -773,7 +773,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		bitmap = ImageUtil.setBitmapRotate(90, bitmap);
 		
 
-		Bitmap bitmap2 = ImageUtil.compressImage(bitmap) ; 
+//		Bitmap bitmap2 = ImageUtil.compressImage(bitmap) ; 
 //		try {
 //			FileUtil.del(imgPath);
 //		} catch (IOException e) {
@@ -781,7 +781,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 //			e.printStackTrace();
 //		}
 		
-		item.setPhoto(NormalUtil.bitmapToBase64(bitmap2));
+		item.setPhoto(NormalUtil.bitmapToBase64(bitmap));
 		DBTool.getInstance().saveMessage(getApplicationContext(), item);
 	}
 

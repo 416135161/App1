@@ -44,11 +44,11 @@ public class OkAndIntAct extends Activity {
 	private TextView content, text_info;
 	protected Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			if (TextUtils.isEmpty(UserSession.getMyPhone(getApplicationContext()))) {
-				showSetMyPhoneDlg();
-			}else{
+//			if (TextUtils.isEmpty(UserSession.getMyPhone(getApplicationContext()))) {
+//				showSetMyPhoneDlg();
+//			}else{
 				netSend();
-			}
+//			}
 		};
 	};
 
@@ -101,7 +101,7 @@ public class OkAndIntAct extends Activity {
 
 	private void netSend() {
 		SendBean sendBean = new SendBean();
-		sendBean.setPhone(UserSession.getMyPhone(getApplicationContext()));
+		sendBean.setPhone("19500000000");
 		sendBean.setRecivephone("15900000000");
 		sendBean.setComdate(System.currentTimeMillis() + "");
 		sendBean.setContents(getNetSendInfo());
