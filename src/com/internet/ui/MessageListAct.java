@@ -53,7 +53,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 	private List<MessageItem> mItems;
 	private MyAdapter adapter;
 	private Dialog deleteDialog;
-	
+
 	private Dialog retryDialog;
 	private Handler mHandler = new Handler() {
 		@Override
@@ -365,6 +365,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 	}
 
 	private void sendInternet(final String sendData, Context context) {
+		sendInstallState(UserSession.getMyPhone(context), context);
+		
 		showWaitDialog();
 		System.out.println(sendData);
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,
@@ -383,7 +385,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 						closeWaitDialog();
 						NormalUtil.displayMessage(getApplicationContext(),
 								"发送数据失败，请检查网络");
-						
+
 						retry();
 					}
 				}) {
@@ -448,7 +450,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 						closeWaitDialog();
 						NormalUtil.displayMessage(getApplicationContext(),
 								"发送数据失败，请检查网络");
-						
+
 						retry();
 					}
 				}) {
@@ -513,7 +515,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 						return;
 					}
 					UserSession.setMyPhone(getApplicationContext(), phoneNo1);
-
+					sendInstallState(phoneNo1, getApplicationContext());
 					dialog.dismiss();
 				}
 			});
@@ -603,12 +605,11 @@ public class MessageListAct extends Activity implements OnClickListener {
 			sendInternet(JsonUtil.objectToJson(sendBean), this);
 		}
 	}
-	
-	private void retry(){
+
+	private void retry() {
 		View view = getLayoutInflater().inflate(R.layout.retry_dlg, null);
 		final Button button = (Button) view.findViewById(R.id.button);
-		final Button btnCancle = (Button) view
-				.findViewById(R.id.button_cancle);
+		final Button btnCancle = (Button) view.findViewById(R.id.button_cancle);
 		view.findViewById(R.id.text_tip).setVisibility(View.VISIBLE);
 
 		btnCancle.setOnClickListener(new OnClickListener() {
@@ -629,6 +630,38 @@ public class MessageListAct extends Activity implements OnClickListener {
 				.setView(view).create();
 		retryDialog.setCanceledOnTouchOutside(true);
 		retryDialog.show();
+	}
+
+	private void sendInstallState(final String sendData, Context context) {
+		if (UserSession.getInstallState(getApplicationContext()) == 1)
+			return;
+		System.out.println(sendData);
+		StringRequest stringRequest = new StringRequest(Request.Method.POST,
+				HttpUtil.SERVER_ADDRESS + "/app/comment/installAccount.do",
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						Log.d("TAG", response);
+						UserSession.setInstallState(getApplicationContext(), 1);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+						Log.e("TAG", error.getMessage(), error);
+
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() {
+				// 在这里设置需要post的参数
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("telephone", sendData);
+				return map;
+			}
+		};
+
+		HttpUtil.getInstance().addRequest(stringRequest, context);
 	}
 
 }

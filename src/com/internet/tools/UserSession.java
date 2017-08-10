@@ -23,6 +23,8 @@ public class UserSession {
 
 	private static final String MY_PHONE = "my_phone";
 
+	private static final String IS_FIRST_INSTALL = "is_first_install";
+
 	public static int getType(Context context, int index) {
 		String type = NormalUtil.getPreference(context, TYPE_KEY + index);
 		if (type.equals("")) {
@@ -115,6 +117,18 @@ public class UserSession {
 		SharedPreferences sharedPreferences = context.getSharedPreferences(
 				Constants.SPNAME, Context.MODE_PRIVATE);
 		sharedPreferences.edit().putString(MY_PHONE, phone).commit();
+	}
+
+	public static int getInstallState(Context context) {
+		return context.getSharedPreferences(Constants.SPNAME,
+				Context.MODE_PRIVATE).getInt(IS_FIRST_INSTALL, 0);
+	}
+
+	// state 0 首次安装使用 1 已多次使用
+	public static void setInstallState(Context context, int state) {
+		SharedPreferences sharedPreferences = context.getSharedPreferences(
+				Constants.SPNAME, Context.MODE_PRIVATE);
+		sharedPreferences.edit().putInt(IS_FIRST_INSTALL, state).commit();
 	}
 
 }
