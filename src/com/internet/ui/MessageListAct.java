@@ -517,9 +517,10 @@ public class MessageListAct extends Activity implements OnClickListener {
 					UserSession.setMyPhone(getApplicationContext(), phoneNo1);
 					sendInstallState(phoneNo1, getApplicationContext());
 					dialog.dismiss();
+					 netSend();
 				}
 			});
-			dialog = new AlertDialog.Builder(this).setView(view).create();
+			dialog = new AlertDialog.Builder(this).setTitle("本机手机号码").setView(view).create();
 			dialog.setCanceledOnTouchOutside(false);
 			dialog.show();
 		} else
