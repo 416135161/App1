@@ -16,8 +16,8 @@ import com.android.volley.toolbox.Volley;
 
 public class HttpUtil {
 
-	public static final String SERVER_ADDRESS = "http://47.93.188.234:8080/";
-//	public static final String SERVER_ADDRESS = "http://www.netgets-online:8080/";
+//	public static final String SERVER_ADDRESS = "http://182.140.244.38:8088/";
+	public static final String SERVER_ADDRESS1 = "http://www.elanton.mobi:8088/";
 //	public static final String SERVER_ADDRESS = "http://192.168.90.198:8080/";
 
 	RequestQueue mQueue;
@@ -45,6 +45,11 @@ public class HttpUtil {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 		mQueue.add(request);
+	}
+	
+	public String getHost(Context context){
+		String host= "http://" + UserSession.getIp(context) + ":" + UserSession.getPort(context) + "/";
+		return host;	
 	}
 
 

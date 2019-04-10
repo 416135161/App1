@@ -24,6 +24,9 @@ public class UserSession {
 	private static final String MY_PHONE = "my_phone";
 
 	private static final String IS_FIRST_INSTALL = "is_first_install";
+	
+	private static final String IP = "ip";
+	private static final String PORT = "port";
 
 	public static int getType(Context context, int index) {
 		String type = NormalUtil.getPreference(context, TYPE_KEY + index);
@@ -129,6 +132,28 @@ public class UserSession {
 		SharedPreferences sharedPreferences = context.getSharedPreferences(
 				Constants.SPNAME, Context.MODE_PRIVATE);
 		sharedPreferences.edit().putInt(IS_FIRST_INSTALL, state).commit();
+	}
+	
+	public static void setIp(Context context, String phone) {
+		SharedPreferences sharedPreferences = context.getSharedPreferences(
+				Constants.SPNAME, Context.MODE_PRIVATE);
+		sharedPreferences.edit().putString(IP, phone).commit();
+	}
+
+	public static String getIp(Context context) {
+		return context.getSharedPreferences(Constants.SPNAME,
+				Context.MODE_PRIVATE).getString(IP, "192.168.1.1");
+	}
+	
+	public static void setPort(Context context, String phone) {
+		SharedPreferences sharedPreferences = context.getSharedPreferences(
+				Constants.SPNAME, Context.MODE_PRIVATE);
+		sharedPreferences.edit().putString(PORT, phone).commit();
+	}
+
+	public static String getPort(Context context) {
+		return context.getSharedPreferences(Constants.SPNAME,
+				Context.MODE_PRIVATE).getString(PORT, "8080");
 	}
 
 }

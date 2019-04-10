@@ -370,7 +370,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 		showWaitDialog();
 		System.out.println(sendData);
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,
-				HttpUtil.SERVER_ADDRESS + "app/comment/add.do",
+				HttpUtil.getInstance().getHost(this) + "app/comment/add.do",
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
@@ -432,7 +432,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 		// e.printStackTrace();
 		// }
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,
-				HttpUtil.SERVER_ADDRESS + "app/comment/updateImg.do",
+				HttpUtil.getInstance().getHost(this) + "app/comment/updateImg.do",
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
@@ -638,7 +638,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 			return;
 		System.out.println(sendData);
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,
-				HttpUtil.SERVER_ADDRESS + "/app/comment/installAccount.do",
+				HttpUtil.getInstance().getHost(this) + "/app/comment/installAccount.do",
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {

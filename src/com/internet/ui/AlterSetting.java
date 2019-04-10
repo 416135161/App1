@@ -54,7 +54,7 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 
 	private CheckBox check_send_msg;
 
-	private Button mBtnSendReport, mBtnResetNo;
+	private Button mBtnSendReport, mBtnResetNo, mBtnSetHost;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +129,9 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 
 		mBtnResetNo = (Button) findViewById(R.id.btn_reset_no);
 		mBtnResetNo.setOnClickListener(this);
+		
+		 mBtnSetHost = (Button) findViewById(R.id.btn_set_host);
+		 mBtnSetHost.setOnClickListener(this);
 
 		if (TextUtils.isEmpty(UserSession
 				.getSendReportPhoneNo(getApplicationContext())))
@@ -336,6 +339,9 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 			break;
 		case R.id.btn_reset_no:
 			showSendReportPhoneDlg();
+			break;
+		case R.id.btn_set_host:
+			AlterSetting.this.startActivity(new Intent(AlterSetting.this, HostActivity.class));
 			break;
 		}
 	}
