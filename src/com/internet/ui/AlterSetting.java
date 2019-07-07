@@ -133,11 +133,11 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 		 mBtnSetHost = (Button) findViewById(R.id.btn_set_host);
 		 mBtnSetHost.setOnClickListener(this);
 
-		if (TextUtils.isEmpty(UserSession
-				.getSendReportPhoneNo(getApplicationContext())))
-			mBtnResetNo.setVisibility(View.GONE);
-		else
-			mBtnResetNo.setVisibility(View.VISIBLE);
+//		if (TextUtils.isEmpty(UserSession
+//				.getSendReportPhoneNo(getApplicationContext())))
+//			mBtnResetNo.setVisibility(View.GONE);
+//		else
+//			mBtnResetNo.setVisibility(View.VISIBLE);
 
 		// setGoneBtn();
 	}
@@ -593,7 +593,7 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 	private void setGoneBtn() {
 		((ViewGroup) check_send_msg.getParent()).setVisibility(View.GONE);
 		mBtnSendReport.setVisibility(View.GONE);
-		mBtnResetNo.setVisibility(View.GONE);
+//		mBtnResetNo.setVisibility(View.GONE);
 	}
 
 }

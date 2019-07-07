@@ -7,6 +7,10 @@
 
     <include layout="@layout/title" />
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="15dp" />
+
     <include layout="@layout/week_select_group1" />
 
     <View
@@ -19,6 +23,8 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:background="@color/grey_color" />
 
     <include layout="@layout/week_select_group3" />
@@ -26,6 +32,8 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:background="@color/grey_color" />
 
     <include layout="@layout/week_select_group4" />
@@ -37,74 +45,88 @@
 
     <include layout="@layout/week_select_group5" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey_color" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="visible" >
+        android:layout_marginTop="15dp"
+        android:background="@color/white_color"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:orientation="horizontal" >
+            android:layout_weight="1"
+            android:text="是否实时发送"
+            android:textColor="#1A1A1A"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:text="是否实时发送"
-                android:textColor="@color/black_color"
-                android:textSize="19sp"
-                android:textStyle="bold" />
+        <CheckBox
+            android:id="@+id/check_send_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/login_check_bg"
+            android:text=" " />
+    </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/check_send_msg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/login_check_bg"
-                android:text=" " />
-        </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey_color" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible" >
 
         <Button
             android:id="@+id/btn_send_report"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
+            android:layout_weight="1"
+            android:background="#00000000"
             android:text="发送统计报告"
-            android:textColor="@color/black_color"
-            android:textSize="19sp"
+            android:textColor="#ff1a1a1a"
+            android:textSize="17sp"
             android:textStyle="bold" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+            android:background="#ffcdcdcd" />
 
         <Button
             android:id="@+id/btn_reset_no"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
+            android:layout_weight="1"
+            android:background="#00000000"
             android:text="重设汇报号码"
-            android:textColor="@color/black_color"
-            android:textSize="19sp"
+            android:textColor="#ff1a1a1a"
+            android:textSize="17sp"
             android:textStyle="bold" />
-        
-          <Button
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+            android:background="#ffcdcdcd" />
+
+        <Button
             android:id="@+id/btn_set_host"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
+            android:layout_weight="1"
+            android:background="#00000000"
             android:text="设置Host"
-            android:textColor="@color/black_color"
-            android:textSize="19sp"
+            android:textColor="#ff1a1a1a"
+            android:textSize="17sp"
             android:textStyle="bold" />
     </LinearLayout>
 

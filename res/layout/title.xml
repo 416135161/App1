@@ -10,17 +10,18 @@
         android:id="@+id/topBar"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/head_bg"
+        android:background="@color/white_color"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/title_paddingleft"
         android:paddingRight="@dimen/title_paddingright"
         custom:leftBackground="@drawable/title_bar_btn"
-        custom:titleTextColor="@color/white_color" />
+        custom:titleTextColor="@color/black_color" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/logo" 
-        android:layout_marginLeft="-30dp"/>
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="13dp"/>
 
 </FrameLayout>

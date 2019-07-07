@@ -33,7 +33,7 @@
     <color name="second_title_color">#999999</color>
     <!-- 主体背景颜色 -->
     <color name="main_bg_color">#f1f6fa</color>
-    <color name="grey_color">#cccccc </color>
+    <color name="grey_color">#dedede </color>
     <!-- 版本号字体颜色 绿色#166d06橙色  #ff9933 -->
     <color name="version_color">#ffffff</color>
     <color name="cache_color">#00000000</color>

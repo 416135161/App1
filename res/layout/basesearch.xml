@@ -41,40 +41,42 @@
         <com.internet.myui.MySearchFrameView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
+         <ImageView
+            android:id="@+id/image0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="92dp"
+            android:src="@drawable/flash" />
+        
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right|center_vertical"
+        android:layout_height="60dp"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:padding="5dp" >
-
-        <ImageView
-            android:id="@+id/image0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/flash" />
-
         <ImageView
             android:id="@+id/image1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_weight="1"
             android:src="@drawable/remind"
             android:visibility="visible" />
+        
+        <View 
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+            android:background="#ffcdcdcd"
+            />
 
         <ImageView
             android:id="@+id/image2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+              android:layout_weight="1"
             android:src="@drawable/search" />
     </LinearLayout>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="10dp"
-        android:background="#14a2eb" />
 
 </LinearLayout>

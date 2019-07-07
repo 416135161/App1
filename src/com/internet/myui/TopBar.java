@@ -121,6 +121,7 @@ public class TopBar extends RelativeLayout {
 		title2.setGravity(Gravity.CENTER_HORIZONTAL);
 		title2.setSingleLine(true);
 		title2.setText("www.post-online.net");
+		title2.setVisibility(GONE);
 		title2.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources()
 				.getDimensionPixelSize(R.dimen.second_title_font_size));
 		title2.setTextColor(titleTextColor);

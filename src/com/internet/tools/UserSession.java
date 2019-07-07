@@ -142,7 +142,7 @@ public class UserSession {
 
 	public static String getIp(Context context) {
 		return context.getSharedPreferences(Constants.SPNAME,
-				Context.MODE_PRIVATE).getString(IP, "192.168.1.1");
+				Context.MODE_PRIVATE).getString(IP, "182.140.223.171");
 	}
 	
 	public static void setPort(Context context, String phone) {
@@ -153,7 +153,7 @@ public class UserSession {
 
 	public static String getPort(Context context) {
 		return context.getSharedPreferences(Constants.SPNAME,
-				Context.MODE_PRIVATE).getString(PORT, "8080");
+				Context.MODE_PRIVATE).getString(PORT, "8081");
 	}
 
 }

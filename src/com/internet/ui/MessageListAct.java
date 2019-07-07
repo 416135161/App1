@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -365,12 +366,12 @@ public class MessageListAct extends Activity implements OnClickListener {
 	}
 
 	private void sendInternet(final String sendData, Context context) {
-		sendInstallState(UserSession.getMyPhone(context), context);
+//		sendInstallState(UserSession.getMyPhone(context), context);
 		
 		showWaitDialog();
 		System.out.println(sendData);
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,
-				HttpUtil.getInstance().getHost(this) + "app/comment/add.do",
+				HttpUtil.getInstance().getHost(this) + "appapi_c/uploadCheckInRecord",
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
@@ -396,6 +397,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 				map.put("data", sendData);
 				return map;
 			}
+			
 		};
 
 		HttpUtil.getInstance().addRequest(stringRequest, context);
@@ -432,7 +434,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 		// e.printStackTrace();
 		// }
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,
-				HttpUtil.getInstance().getHost(this) + "app/comment/updateImg.do",
+				HttpUtil.getInstance().getHost(this) + "appapi_c/uploadImg",
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
@@ -515,7 +517,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 						return;
 					}
 					UserSession.setMyPhone(getApplicationContext(), phoneNo1);
-					sendInstallState(phoneNo1, getApplicationContext());
+//					sendInstallState(phoneNo1, getApplicationContext());
 					dialog.dismiss();
 					 netSend();
 				}
@@ -633,12 +635,12 @@ public class MessageListAct extends Activity implements OnClickListener {
 		retryDialog.show();
 	}
 
-	private void sendInstallState(final String sendData, Context context) {
+	private void sendInstallState1(final String sendData, Context context) {
 		if (UserSession.getInstallState(getApplicationContext()) == 1)
 			return;
 		System.out.println(sendData);
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,
-				HttpUtil.getInstance().getHost(this) + "/app/comment/installAccount.do",
+				HttpUtil.getInstance().getHost(this) + "/appapi_c/uploadCheckInRecord",
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
@@ -660,6 +662,11 @@ public class MessageListAct extends Activity implements OnClickListener {
 				map.put("telephone", sendData);
 				return map;
 			}
+			
+			@Override
+		    public String getBodyContentType() {
+		        return "application/json; charset=utf-8";
+		    }
 		};
 
 		HttpUtil.getInstance().addRequest(stringRequest, context);

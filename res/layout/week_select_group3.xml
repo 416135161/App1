@@ -2,9 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
+     android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
     android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+     android:background="@color/white_color" >
 
     <LinearLayout
         android:layout_width="0dp"
@@ -14,11 +18,11 @@
 
         <TextView
             android:id="@+id/edit3"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="18:45"
-            android:textColor="@color/black_color"
+             android:textColor="#1A1A1A"
             android:textSize="19sp"
             android:textStyle="bold" />
 
@@ -37,8 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/btn_check"
-                android:text="周日"
-                android:textColor="@color/black_color"
+                android:text="  周日"
+               android:textColor="#999999"
                 android:textSize="14sp" >
             </RadioButton>
 
@@ -47,8 +51,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/btn_check"
-                android:text="周末"
-                android:textColor="@color/black_color"
+                android:text="  周末"
+                  android:textColor="#999999"
+                  android:layout_marginLeft="15dp"
                 android:textSize="14sp" >
             </RadioButton>
 
@@ -57,8 +62,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/btn_check"
-                android:text="每天"
-                android:textColor="@color/black_color"
+                android:text="  每天"
+                android:textColor="#999999"
+                android:layout_marginLeft="15dp"
                 android:textSize="14sp" >
             </RadioButton>
         </RadioGroup>
