@@ -3,30 +3,47 @@
     android:layout_height="match_parent"
     android:background="#f9f9f9"
     android:orientation="vertical" >
+
+    <include layout="@layout/title" />
+
     <EditText
-    	android:id="@+id/et_ip"
-   		android:layout_width="match_parent"
-    	android:layout_height="50dp"
-    	android:hint="請輸入IP地址"
-     />
-     
-      <EditText
-    	android:id="@+id/et_port"
-   		android:layout_width="match_parent"
-    	android:layout_height="50dp"
-    	android:hint="請輸入端口"
-     />
-      
-      <Button 
+        android:id="@+id/et_ip"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:hint="請輸入IP地址" />
+
+    <EditText
+        android:id="@+id/et_port"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:hint="請輸入端口" />
+
+    <TextView
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
-    	android:layout_height="50dp"
-    	android:hint="保存"/>
-      
-       <TextView
-    	android:id="@+id/tv_host"
-   		android:layout_width="match_parent"
-    	android:layout_height="50dp"
-    	
-     />
- </LinearLayout>
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/host_save_bg"
+        android:hint="保存"
+        android:gravity="center"
+        android:textColor="#ffffffff"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_host"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp" 
+        android:textColor="#ff999999"
+android:textSize="12sp"
+        />
+
+</LinearLayout>

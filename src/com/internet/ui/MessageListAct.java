@@ -161,8 +161,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 					deleteDialog.dismiss();
 				}
 			});
-			deleteDialog = new AlertDialog.Builder(this).setTitle("删除提示")
-					.setView(view).create();
+			deleteDialog =  new Dialog(this, R.style.AlertDialog);
+			deleteDialog.setContentView(view);
 			deleteDialog.setCanceledOnTouchOutside(true);
 			deleteDialog.show();
 			break;
@@ -522,7 +522,9 @@ public class MessageListAct extends Activity implements OnClickListener {
 					 netSend();
 				}
 			});
-			dialog = new AlertDialog.Builder(this).setTitle("本机手机号码").setView(view).create();
+			dialog =  new Dialog(this, R.style.AlertDialog);
+			
+			dialog.setContentView(view);
 			dialog.setCanceledOnTouchOutside(false);
 			dialog.show();
 		} else
@@ -548,7 +550,7 @@ public class MessageListAct extends Activity implements OnClickListener {
 			waitDialog.dismiss();
 	}
 
-	AlertDialog sendDialog;
+	Dialog sendDialog;
 
 	private void showSendDialog() {
 
@@ -572,8 +574,10 @@ public class MessageListAct extends Activity implements OnClickListener {
 				sendDialog.dismiss();
 			}
 		});
-		sendDialog = new AlertDialog.Builder(this).setTitle("请选择发送方式")
-				.setView(view).create();
+		sendDialog =  new Dialog(this, R.style.AlertDialog);
+
+		sendDialog.setContentView(view);
+		
 		sendDialog.show();
 	}
 
@@ -629,8 +633,8 @@ public class MessageListAct extends Activity implements OnClickListener {
 				retryDialog.dismiss();
 			}
 		});
-		retryDialog = new AlertDialog.Builder(this).setTitle("删除提示")
-				.setView(view).create();
+		retryDialog =  new Dialog(this, R.style.AlertDialog);
+		retryDialog.setContentView(view);
 		retryDialog.setCanceledOnTouchOutside(true);
 		retryDialog.show();
 	}

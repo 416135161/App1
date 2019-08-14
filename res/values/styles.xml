@@ -64,4 +64,16 @@
         <item name="android:paddingLeft">10dp</item>
     </style>
 
+
+    
+    
+    <style name="AlertDialog" parent="@android:style/Theme.Dialog">
+    <item name="android:windowBackground">@android:color/transparent</item>
+
+    <item name="android:windowNoTitle">true</item>
+  
+</style>
+
+  
+
 </resources>

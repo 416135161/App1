@@ -2,16 +2,22 @@ package com.internet.ui;
 
 import java.util.Calendar;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -30,7 +36,7 @@ import com.internet.tools.NormalUtil;
 import com.internet.tools.SecretKeyTool;
 import com.internet.tools.UserSession;
 
-public class AlterSetting extends Activity implements OnCheckedChangeListener,
+@TargetApi(Build.VERSION_CODES.HONEYCOMB) public class AlterSetting extends Activity implements OnCheckedChangeListener,
 		RadioGroup.OnCheckedChangeListener, OnClickListener {
 	private final int TIME_DIALOG1 = 1;
 
@@ -96,33 +102,34 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 			text5.setText(UserSession.getTime(getApplicationContext(), 5));
 
 		group1 = (RadioGroup) this.findViewById(R.id.group1);
-		group1.setOnCheckedChangeListener(this);
 		group2 = (RadioGroup) this.findViewById(R.id.group2);
-		group2.setOnCheckedChangeListener(this);
 		group3 = (RadioGroup) this.findViewById(R.id.group3);
-		group3.setOnCheckedChangeListener(this);
 		group4 = (RadioGroup) this.findViewById(R.id.group4);
-		group4.setOnCheckedChangeListener(this);
 		group5 = (RadioGroup) this.findViewById(R.id.group5);
-		group5.setOnCheckedChangeListener(this);
 
 		initRadioButton(group1, 1);
 		initRadioButton(group2, 2);
 		initRadioButton(group3, 3);
 		initRadioButton(group4, 4);
 		initRadioButton(group5, 5);
-
-		checkBox1.setOnCheckedChangeListener(this);
-		checkBox2.setOnCheckedChangeListener(this);
-		checkBox3.setOnCheckedChangeListener(this);
-		checkBox4.setOnCheckedChangeListener(this);
-		checkBox5.setOnCheckedChangeListener(this);
+		
+		group1.setOnCheckedChangeListener(this);
+		group2.setOnCheckedChangeListener(this);
+		group3.setOnCheckedChangeListener(this);
+		group4.setOnCheckedChangeListener(this);
+		group5.setOnCheckedChangeListener(this);
 
 		checkBox1.setChecked(UserSession.getCheck(getApplicationContext(), 1));
 		checkBox2.setChecked(UserSession.getCheck(getApplicationContext(), 2));
 		checkBox3.setChecked(UserSession.getCheck(getApplicationContext(), 3));
 		checkBox4.setChecked(UserSession.getCheck(getApplicationContext(), 4));
 		checkBox5.setChecked(UserSession.getCheck(getApplicationContext(), 5));
+		
+		checkBox1.setOnCheckedChangeListener(this);
+		checkBox2.setOnCheckedChangeListener(this);
+		checkBox3.setOnCheckedChangeListener(this);
+		checkBox4.setOnCheckedChangeListener(this);
+		checkBox5.setOnCheckedChangeListener(this);
 
 		mBtnSendReport = (Button) findViewById(R.id.btn_send_report);
 		mBtnSendReport.setOnClickListener(this);
@@ -144,11 +151,14 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 
 	private void initRadioButton(RadioGroup group, int index) {
 		int type = UserSession.getType(getApplicationContext(), index);
+		Log.e("JJJJJJ", type + "");
+		group.clearCheck();
 		switch (type) {
 		case Constants.NO:
 			group.check(-1);
 			break;
 		case Constants.WEEK:
+			Log.e("week", index + "");
 			if (index == 1)
 				group.check(R.id.r11);
 			else if (index == 2)
@@ -161,10 +171,11 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 				group.check(R.id.r51);
 			break;
 		case Constants.WEEKEND:
+			Log.e("weekend", index + "");
 			if (index == 1)
-				group.check(R.id.r12);
+				((RadioButton)findViewById(R.id.r12)).setChecked(true);
 			else if (index == 2)
-				group.check(R.id.r22);
+				((RadioButton)findViewById(R.id.r22)).setChecked(true);
 			else if (index == 3)
 				group.check(R.id.r32);
 			else if (index == 4)
@@ -173,6 +184,7 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 				group.check(R.id.r52);
 			break;
 		case Constants.EVERYDAY:
+			Log.e("everyday", index + "");
 			if (index == 1)
 				group.check(R.id.r13);
 			else if (index == 2)
@@ -580,9 +592,10 @@ public class AlterSetting extends Activity implements OnCheckedChangeListener,
 					dialog.dismiss();
 				}
 			});
-			text1.setText(UserSession.getPhoneNo(getApplicationContext()));
-			dialog = new AlertDialog.Builder(AlterSetting.this)
-					.setTitle("汇报手机号码").setView(view).create();
+			text1.setText(UserSession.getPhoneNo(getApplicationContext()));	
+			dialog=new Dialog(this, R.style.AlertDialog);
+			dialog.setContentView(view);
+			
 			dialog.setCanceledOnTouchOutside(false);
 			dialog.show();
 		} else

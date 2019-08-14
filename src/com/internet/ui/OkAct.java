@@ -57,7 +57,7 @@ public class OkAct extends Activity {
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
-				handler.sendEmptyMessageDelayed(0, 500);
+				
 			}
 		});
 		content.startAnimation(animation);

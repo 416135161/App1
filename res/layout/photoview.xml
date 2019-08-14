@@ -12,9 +12,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
-        android:paddingTop= "5dp"
-        android:textColor="@color/red_color"
-        android:textSize="14sp" />
+        android:paddingTop="5dp"
+        android:textColor="#ffff0505"
+        android:textSize="18sp" />
 
     <RelativeLayout
         android:id="@+id/photoview"
@@ -38,15 +38,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:textColor="@color/black_color"
-                android:textSize="14sp" />
+                android:textColor="#ff333333"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/photoview_cancelbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/green_color"
+                android:textColor="#ff2ecabe"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -57,8 +57,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/photoview_deletebtn_marginright"
                 android:background="@drawable/icon_delete"
-                android:visibility="gone"
-                 />
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -99,6 +98,6 @@
         android:layout_width="fill_parent"
         android:layout_height="10dp"
         android:layout_weight="0"
-        android:background="#14a2eb" />
+        android:background="@color/white_color" />
 
 </LinearLayout>

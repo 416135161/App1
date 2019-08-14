@@ -2,69 +2,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/background_light"
-    android:orientation="vertical" >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:padding="5dp"
-        android:text="删除提示"
-        android:textColor="@color/black_color"
-        android:textSize="20sp" 
-        android:visibility="gone"
-        />
-
-    <TextView
-        android:id="@+id/text_tip"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="如联网时就选网络发送，否则选短信发送！"
-        android:textColor="@color/green_color"
-        android:textSize="14sp"
-        android:visibility="visible" />
-
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="1dp"
-        android:background="@drawable/login_point" />
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:background="@drawable/white_bg"
+        android:orientation="vertical"
+        android:padding="15dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:text="请选择发送方式"
+            android:textColor="@color/black_color"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/text_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:text="如联网时就选网络发送，否则选短信发送！"
+            android:textColor="#ff333333"
+            android:textSize="13sp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+           android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/login_point" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/transparent"
+                android:text="网络发送"
+                android:textColor="#ff2ecabe"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="80dp"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/transparent"
+                android:text="短信发送"
+                android:textColor="#ff828383"
+                android:textSize="18sp" />
+        </LinearLayout>
+        <!-- android:background="@drawable/login_btn" -->
 
         <Button
-            android:id="@+id/button1"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
+            android:layout_width="1400dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:text="网络发送"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="80dp"
-            android:layout_height="5dp" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="短信发送"
-            android:textSize="18sp" />
+            android:text="确定" />
     </LinearLayout>
-    <!-- android:background="@drawable/login_btn" -->
-
-    <Button
-        android:layout_width="1400dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:text="确定" />
 
 </LinearLayout>

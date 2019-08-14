@@ -38,8 +38,8 @@
     
     -->
     
-        <string name="app_name">e揽通·巡场</string>
-    <string name="title">e揽通·巡场</string>
+        <string name="app_name">e揽通·云端查岗</string>
+    <string name="title">e揽通·云端查岗</string>
 
     <string name="loding">加载中...</string>
     <string name="loding_please_wait">数据加载中，请稍候...</string>

@@ -1,5 +1,7 @@
 package com.internet.ui;
 
+import com.internet.intrface.TopBarClickListener;
+import com.internet.myui.TopBar;
 import com.internet.netget.R;
 import com.internet.tools.HttpUtil;
 import com.internet.tools.UserSession;
@@ -20,12 +22,13 @@ public class HostActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_host_set);
+		setTopBar();
 		mEtIp = (EditText) findViewById(R.id.et_ip);
 		mEtPort = (EditText) findViewById(R.id.et_port);
 		
 		mEtIp.setText(UserSession.getIp(this));
 		mEtPort.setText(UserSession.getPort(this));
-		Button btnSave = (Button) findViewById(R.id.btn_save);
+		TextView btnSave = (TextView) findViewById(R.id.btn_save);
 		btnSave.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -41,5 +44,27 @@ public class HostActivity extends Activity {
 		
 		((TextView)findViewById(R.id.tv_host)).setText(HttpUtil.getInstance().getHost(this));
 
+	}
+	
+	private void setTopBar() {
+		TopBar topBar = (TopBar) findViewById(R.id.topBar);
+		topBar.hiddenLeftButton(true);
+		topBar.hiddenRightButton(false);
+		topBar.setRightDrawable(R.drawable.close);
+		topBar.setTopBarClickListener(new TopBarClickListener() {
+
+			@Override
+			public void rightBtnClick() {
+
+				finish();
+
+			}
+
+			@Override
+			public void leftBtnClick() {
+
+			}
+		});
+		topBar.setTitle(getResources().getString(R.string.title));
 	}
 }

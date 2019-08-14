@@ -152,6 +152,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 							if (n != 0 && N != 0 && n <= N) { // 判断內容是否包含页码标签
 								if (current == 0 && total == 0) {
 									if (n == 1) {
+										
 										System.out.println("扫描为第一页");
 										String str = "<font color='red'>第</font>"
 												+ "<font color='blue'>"
@@ -168,6 +169,10 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 										for (int i = 0; i < array1.length - 1; i++) {
 											waitSend += array1[i];
 										}
+										
+										if(n == N){
+											dealSuccess(array1,  n,  N, item);
+										}
 									} else {
 										System.out.println("扫描顺序错误");
 										tip.setText("失败！请按编号顺序重新扫描！");
@@ -181,49 +186,7 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 									if (n == current + 1) { // 判断当前页码是否为正确的顺序
 
 										if (n == N) { // 当前扫描页码为最后一页
-											System.out.println("扫描为最后一页");
-
-											playBeepSoundAndVibrate();
-											current = n;
-											total = N;
-											for (int i = 0; i < array1.length - 1; i++) {
-												waitSend += array1[i];
-											}
-											String str = "<font color='red'>共</font>"
-													+ "<font color='blue'>"
-													+ N
-													+ "</font>"
-													+ "<font color= 'red'>张全部扫描成功！</font>";
-											tip.setText(Html.fromHtml(str));
-											if (waitSend != null
-													&& waitSend.contains("##")) {
-
-												waitSend += "*";
-												String[] array2 = waitSend
-														.split("##");
-												// tip.setText(array2[0]);
-												for (int i = 1; i < (array2.length - 1); i++) {
-													if (array2[i].length() == 11) {
-														System.out
-																.println(array2[i]);
-														MessageSender
-																.getInstance()
-																.sendSms(
-																		array2[i],
-																		array2[0],
-																		getApplicationContext(),
-																		true);
-													}
-												}
-												saveBitmap(item.getBarcode(),
-														array2[0]);
-												Message message = Message
-														.obtain();
-												message.obj = array2[0];
-												message.what = 3;
-												this.sendMessageDelayed(
-														message, 3000);
-											}
+											dealSuccess(array1,  n,  N, item);
 										} else if (n < N) { // 当前扫描页码为正确的顺序，并且是结束前的某页
 											System.out.println("扫描为第" + n
 													+ "页，共" + N + "页");
@@ -426,6 +389,54 @@ public class Search extends Activity implements SurfaceHolder.Callback {
 		});
 
 	}
+	
+	private void  dealSuccess(String[] array1, int n, int N, BrcodeMessage item){
+		System.out.println("扫描为最后一页");
+
+		playBeepSoundAndVibrate();
+		current = n;
+		total = N;
+		for (int i = 0; i < array1.length - 1; i++) {
+			waitSend += array1[i];
+		}
+		String str = "<font color='red'>共</font>"
+				+ "<font color='blue'>"
+				+ N
+				+ "</font>"
+				+ "<font color= 'red'>张全部扫描成功！</font>";
+		tip.setText(Html.fromHtml(str));
+		if (waitSend != null
+				&& waitSend.contains("##")) {
+
+			waitSend += "*";
+			String[] array2 = waitSend
+					.split("##");
+			// tip.setText(array2[0]);
+			for (int i = 1; i < (array2.length - 1); i++) {
+				if (array2[i].length() == 11) {
+					System.out
+							.println(array2[i]);
+					MessageSender
+							.getInstance()
+							.sendSms(
+									array2[i],
+									array2[0],
+									getApplicationContext(),
+									true);
+				}
+			}
+			saveBitmap(item.getBarcode(),
+					array2[0]);
+			Message message = Message
+					.obtain();
+			message.obj = array2[0];
+			message.what = 3;
+			handler2.sendMessageDelayed(
+					message, 3000);
+		}
+	}
+	
+	
 
 	@Override
 	protected void onStart() {

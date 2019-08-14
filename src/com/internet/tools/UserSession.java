@@ -3,6 +3,7 @@ package com.internet.tools;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class UserSession {
 	private static final String TIME_KEY = "time";
@@ -37,6 +38,8 @@ public class UserSession {
 	}
 
 	public static void setType(Context context, int type, int index) {
+		Log.e("type", type + "");
+		Log.e("index", index + "");
 		NormalUtil.setPreference(context, TYPE_KEY + index, type + "");
 	}
 

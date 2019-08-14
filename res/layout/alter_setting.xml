@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#00000000"
-            android:text="重设汇报号码"
+            android:text="设置管理者手机号"
             android:textColor="#ff1a1a1a"
             android:textSize="17sp"
             android:textStyle="bold" />
